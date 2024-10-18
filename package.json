@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "front-end-devfest2024": "file:",
+    "lucide-react": "^0.453.0",
     "next": "14.2.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "recharts": "^2.13.0"
   },
   "devDependencies": {
     "@types/node": "^20",

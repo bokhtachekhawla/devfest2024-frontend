@@ -25,3 +25,17 @@ body {
     text-wrap: balance;
   }
 }
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #8168BC; /* Your purple button color */
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
