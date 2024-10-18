@@ -1,12 +1,14 @@
 'use client'
 import React, { useState } from 'react'
+import Image from 'next/image'
 import { Sidebar } from './Sidebar'
 import { StatCard } from './StatCard'
 import { ChartCard } from './ChartComponent'
-import { STAT_CARDS, CHART_CARDS, SIDEBAR_ITEMS } from '../../../../constants/index'
-import { DashboardProps } from '../../../../types/index'
+import { STAT_CARDS, CHART_CARDS } from '@/constants/index'
+import { DashboardProps } from '@/types/index'
 import { Bell, Search, ChevronDown } from 'lucide-react'
-export default function DashboardClient({ user }: DashboardProps) {
+export default function DashboardClient({  }: DashboardProps) {
+  // user on params
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [activeTab, setActiveTab] = useState('Dashboard') // Control active tab
 
@@ -39,7 +41,7 @@ export default function DashboardClient({ user }: DashboardProps) {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 font-sans">
+    <div className="flex h-screen bg-gray-100 font-sans w-full">
       <Sidebar
         isOpen={sidebarOpen}
         toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
@@ -60,7 +62,13 @@ export default function DashboardClient({ user }: DashboardProps) {
                 <Bell className="h-6 w-6 text-gray-500" />
               </button>
               <button className="ml-4 flex items-center bg-white p-2 rounded-full shadow">
-                <img src="/placeholder.svg?height=32&width=32" alt="User" className="h-8 w-8 rounded-full" />
+                <Image 
+                src="/placeholder.svg" 
+                 height={32}
+                 width={32} 
+                 alt="User" 
+                 className="h-8 w-8 rounded-full"
+                 />
                 <ChevronDown className="h-4 w-4 ml-2 text-gray-500" />
               </button>
             </div>

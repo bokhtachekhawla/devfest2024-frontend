@@ -1,6 +1,6 @@
 import React from 'react'
-import { ChartCardProps } from '../../../../types/index'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { ChartCardProps } from '@/types/index'
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export const ChartCard: React.FC<ChartCardProps> = ({ title, data, dataKey, color }) => {
   return (

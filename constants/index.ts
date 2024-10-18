@@ -1,4 +1,4 @@
-import { SidebarItem, StatCardProps, ChartCardProps } from '../types'
+import { SidebarItem, StatCardProps, ChartCardProps } from '@/types'
 import { 
   LayoutDashboard, 
   Activity, 
@@ -7,7 +7,6 @@ import {
   ClipboardList, 
   Battery, 
   Bell, 
-  Users, 
   Settings
 } from 'lucide-react'
 
@@ -19,8 +18,6 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   { name: 'Tasks', icon: ClipboardList },
   { name: 'Energy Usage', icon: Battery },
   { name: 'Alerts', icon: Bell },
-  { name: 'Managers Management', icon: Users },
-  { name: 'Operators Management', icon: Users },
   { name: 'Settings', icon: Settings },
 ]
 

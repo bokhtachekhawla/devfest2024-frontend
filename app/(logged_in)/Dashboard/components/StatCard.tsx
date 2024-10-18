@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatCardProps } from '../../../../types/index'
+import { StatCardProps } from '@/types/index'
 
 export const StatCard: React.FC<StatCardProps> = ({ title, value, icon: Icon }) => {
   return (
