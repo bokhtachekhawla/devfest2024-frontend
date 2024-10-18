@@ -1,12 +1,8 @@
 import Image from "next/image";
-// import Footer from "@/components/navigation/Footer";
-// import Sidebar from "@/components/navigation/sideBar";
 import Link from "next/link";
-// import Navbar from "@/components/navigation/sideBar"
 export default function Home() {
   return (
     <>
-    {/* <Sidebar /> */}
     <main className="flex  flex-col items-center justify-between py-24 px-8 ">
       <div className="">
       <div className=" py-4">
@@ -24,7 +20,7 @@ export default function Home() {
         </div>
 
         <div className="py-2 mx-5 ">
-          <p className="text-text_black font-semibold text-xl xl:text-justify xl:max-w-[40vw] text-center leading-relaxed px-6 p-6">
+          <p className="text-text_black font-semibold  lg:text-xl text-base xl:text-justify xl:max-w-[40vw] text-center leading-relaxed px-6 p-6">
             Car manufacturing relies on a smooth, fast-paced process 
             where machines and workers must work in perfect harmony.
             Every step—like stamping metal sheets into car doors or 

@@ -34,11 +34,11 @@ export default function Login() {
 
       <div className="w-full xl:min-h-[100vh] xl:flex xl:flex-col xl:justify-center xl:drop-shadow-md bg-white xl:w-1/2 xl:pr-6 p-6">
         
-        <p className="text-base 2xl:text-lg xl:text-lg text-center text-text_inputs_grey mb-5">
+        <p className="sm:text-sm md:text-lg  lg:text-lg text-base 2xl:text-lg xl:text-xl text-center text-text_inputs_grey mb-5">
           Please fill out the form below to continue
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col items-center">
-          <div className="w-[70%] lg:w-[55%] flex justify-center">
+          <div className="w-[90%] lg:w-[55%] flex justify-center">
             <input
               type="email"
               id="email"
@@ -49,7 +49,7 @@ export default function Login() {
               className="drop-shadow-md w-full xl:w-3/4 px-5 py-3 mb-5 rounded-lg text-gdg-gray"
             />
           </div>
-          <div className="lg:w-[55%]  w-[70%]  flex justify-center flex-col items-center mb-10">
+          <div className="lg:w-[55%]  w-[90%]  flex justify-center flex-col items-center mb-10">
             <input
               type="password"
               id="password"
@@ -64,7 +64,7 @@ export default function Login() {
             )}
           </div>
           <button
-            className="lg:w-[55%]  w-[70%]  xl:w-3/4 text-center font-bold px-5 py-3 mb-8 xl:mb-11 text-white bg-purple_button rounded-lg shadow-lg"
+            className="lg:w-[55%]  w-[90%]  xl:w-3/4 text-center font-bold px-5 py-3 mb-8 xl:mb-11 text-white bg-purple_button rounded-lg shadow-lg"
             type="submit"
           >
             Continue
