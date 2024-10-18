@@ -11,6 +11,13 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        purple_button: "#8168BC",
+        purple_logo: "#271e49",
+        blue_logo:"#359aea",
+        text_inputs_grey :"#696767",
+        text_black : "#1A1A1A",
+
+
       },
     },
   },
