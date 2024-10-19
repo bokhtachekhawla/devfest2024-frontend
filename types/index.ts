@@ -45,20 +45,21 @@ export interface TodoListProps {
 }
 
 export interface MachineData {
-  id: string
-  temperature: number
-  vibration: number
-  energy: number
+  id :number
+  name: string
   type: string
+  Last_Maintenance : Date
+  details : any[]
   status: 'running' | 'ideal' | 'maintenance'
 }
 
 export interface DeffectData {
   id: number
-  machine: string
+  machine_id: number
+  machine_type:string
+  machine_name:string
   defect_time: Date
   defect_type: string
-  type: string
 }
 
 export interface DeffectTableProps {
