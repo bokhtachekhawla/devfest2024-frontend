@@ -3,7 +3,11 @@ import React, { useState } from 'react'
 import { Sidebar } from './Sidebar'
 import { StatCard } from './StatCard'
 import { ChartCard } from './ChartComponent'
-import { STAT_CARDS, CHART_CARDS, SIDEBAR_ITEMS } from '../../../../constants/index'
+import { PieChart } from './PieChart'
+import { BarChartComponent } from './BarChartComponent'
+import { StatsTable } from './StatsTable'
+import { TodoList } from './TodoList'
+import { STAT_CARDS, CHART_CARDS,energyUsageData,todosData,machineData } from '../../../../constants/index'
 import { DashboardProps } from '../../../../types/index'
 import { Bell, Search, ChevronDown } from 'lucide-react'
 export default function DashboardClient({ user }: DashboardProps) {
@@ -15,23 +19,45 @@ export default function DashboardClient({ user }: DashboardProps) {
       case 'Dashboard':
         return (
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
               {STAT_CARDS.map((card, index) => (
                 <StatCard key={index} {...card} />
               ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {CHART_CARDS.map((card, index) => (
-                <ChartCard key={index} {...card} />
-              ))}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+            {CHART_CARDS.map((card, index) => {
+            // If the title is "Production Output", render the BarChart instead of ChartCard
+            if (card.title === 'Production Output') {
+              return (
+                <BarChartComponent
+                  title={card.title}
+                  key={index}
+                  data={card.data}
+                  dataKey={card.dataKey}
+                  color={card.color}
+                />
+              );
+            }
+
+            // Otherwise, render the default ChartCard
+            return <ChartCard key={index} {...card} />;
+          })}
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+            <PieChart
+              title="Energy Usage by Machines"
+              data={energyUsageData}
+              dataKey="value"
+            />
+            <TodoList todos={todosData} />
             </div>
           </div>
         )
       case 'Machine Monitoring':
-        return <div>Machine Monitoring Content</div>
+        return <div><StatsTable data={machineData}/></div>
       case 'Production Metrics':
-        return <div>Production Metrics Content</div>
+        return <div></div>
       // Add cases for other tabs here
       default:
         return <div>Select a tab to view content</div>
@@ -39,15 +65,14 @@ export default function DashboardClient({ user }: DashboardProps) {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 font-sans">
+    <div className="flex h-screen bg-gray-100 font-sans w-full">
       <Sidebar
         isOpen={sidebarOpen}
         toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         setActiveTab={setActiveTab} // Pass function to handle active tab
       />
       <main className="flex-1 overflow-y-auto bg-gray-100"> {/* Handles scrolling here */}
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex justify-between items-center w-full mb-6">
+      <div className="flex justify-between items-center w-full bg-white p-7">
             <h2 className="text-3xl font-semibold text-gray-800">Dashboard</h2>
             <div className="flex items-center">
               <div className="relative">
@@ -65,6 +90,7 @@ export default function DashboardClient({ user }: DashboardProps) {
               </button>
             </div>
           </div>
+        <div className="container mx-auto px-6 py-4 ">
           {renderContent()}
         </div>
       </main>
