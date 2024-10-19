@@ -83,18 +83,19 @@ export interface TableHeader {
     label: string;
 }
 export interface TableBody {
-  id: string;
+  anomaly : string | null;
   machine: string;
   task : string |null; 
-  shifttime: string | null;
+  shift: string | null;
   output: number | null;
   energy: number| null;
   assign: string| null;
   duedate: string| null;
   type: string;
-  status: string;
+  status: string|null;
   report : string | null;
   date : string | null;
+  delete: React.FC<LucideProps> | null
 }
 
 export interface UserInfoInputProps {
@@ -116,7 +117,8 @@ export interface EnergyData {
   id: string
   name: string
   energyConsumption: { time: number; value: number }[]
-  lastEnergyUsage: number
+  lastEnergyUsage: number,
+  
 }
 
 export interface EnergyTableProps {

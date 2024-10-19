@@ -136,9 +136,8 @@ import EnergyTable from './EnergyTable'
 import { BarChartComponent } from './BarChartComponent'
 import { StatsTable } from './MachinsTable'
 import { TodoList } from './TodoList'
-import { STAT_CARDS, CHART_CARDS,energyUsageData,todosData,machineData , tableHeaders  ,machineTableBody ,tasktableHeaders ,tasktablebody, Alertstablebody ,AlertstableHeaders} from '@/constants/index'
-// import { defectData } from '@/data/defectData'
-import { defectData } from '@/data/defectData'; // Ensure import is correct
+import { STAT_CARDS, CHART_CARDS,energyUsageData ,todosData,machineData , tableHeaders ,energyData ,machineTableBody ,tasktableHeaders ,taskTableBody, alertsTableBody ,AlertstableHeaders} from '@/constants/index'
+import { defectData } from '@/data/defectData'
 
 import { DashboardProps } from '@/types/index'
 import {MachineTable} from "@/components/production/production"
@@ -202,6 +201,24 @@ export default function DashboardClient({  }: DashboardProps) {
       case 'Defect Logging':
         return <div><StatsTableDefect data = {defectData}/></div>
       case 'Tasks':
+        return <div><Tables headers={tasktableHeaders} body={taskTableBody} /></div>
+        case 'Alerts':
+          return (
+            <div>
+              <Tables headers={AlertstableHeaders} body={alertsTableBody} />
+            </div>
+          );
+        
+        case 'Energy Usage':
+          return (
+            <div>
+              <div className="flex justify-center mb-4">
+                <button className="w-full max-w-xs bg-[#8400FF] text-white py-2 rounded-lg hover:bg-[#7a00cc] transition duration-200">Add Energy Usage</button>
+              </div>
+              <EnergyTable data={energyData} />
+            </div>
+          );
+        
         return <div>
           {/* <Tables headers={tasktableHeaders} body={tasktablebody} /> */}
           <TaskTable headers={tasktableHeaders} body={tasktablebody} />
@@ -227,7 +244,7 @@ export default function DashboardClient({  }: DashboardProps) {
       />
       <main className="flex-1 overflow-y-auto bg-gray-100"> {/* Handles scrolling here */}
       <div className="flex justify-between items-center w-full bg-white p-7">
-            <h2 className="text-3xl font-semibold text-gray-800">Dashboard</h2>
+            <h2 className="text-3xl font-semibold text-gray-800">{activeTab}</h2>
             <div className="flex items-center">
               <div className="relative">
                 <input type="text" placeholder="Search" className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal" />
