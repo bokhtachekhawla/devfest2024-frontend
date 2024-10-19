@@ -5,7 +5,7 @@ import StatisticsSidebar from "@/components/defect-logging/aside-defect-table";
 import { defectData } from '@/data/defectData';
 import ProgressBar  from '@/components/ProgressBar';
 import api from "@/lib/axios"
-import { log } from 'console';
+// import { log } from 'console';
 
 interface DeffectTableProps {
   data: DeffectData[];
