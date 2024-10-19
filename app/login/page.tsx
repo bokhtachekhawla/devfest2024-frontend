@@ -136,11 +136,19 @@ export default function Login() {
 
   return (
     <div className="flex flex-col xl:flex-row items-center w-full px-8 py-20 xl:px-0">
-      <div className="w-96 xl:w-1/2 flex items-center justify-center">
+      {/* <div className="w-96 xl:w-1/2 flex items-center justify-center">
         <h1 className="text-5xl xl:text-5xl font-bold text-center">Log In</h1>
         <Image src="/logo-new.png" alt="project Logo" width={90} height={90} />
-      </div>
-
+      </div> */}
+<div className="w-96 xl:w-1/2 flex items-center justify-center">
+        <h1 className="text-5xl xl:text-5xl font-bold text-center ">
+           Log In
+         </h1>
+         <Image
+           src="/logo-new.png"
+           alt="project Logo"           width={90}
+           height={90}
+         />       </div>
       <div className="w-full xl:min-h-[100vh] xl:flex xl:flex-col xl:justify-center xl:drop-shadow-md bg-white xl:w-1/2 xl:pr-6 p-6">
         <p className="sm:text-sm md:text-lg lg:text-lg text-base 2xl:text-lg xl:text-xl text-center text-text_inputs_grey mb-5">
           Please fill out the form below to continue
@@ -185,7 +193,7 @@ export default function Login() {
         <div className="flex flex-col items-center">
           <p className="text-text_inputs_grey">Or</p>
           <p className="w-[55%] text-base xl:w-3/4 text-center font-base px-5 py-3 xl:mb-11 text-text_inputs_grey">
-            Support@entrprisename.dz
+            Support@company.dz
           </p>
         </div>
       </div>

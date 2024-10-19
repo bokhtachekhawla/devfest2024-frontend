@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 const api = axios.create({
-  baseURL: "https://b56a-105-235-130-97.ngrok-free.app", 
+  baseURL: "https://d0af-105-235-130-20.ngrok-free.app", 
   headers: {
     "Content-Type": "application/json",
   },

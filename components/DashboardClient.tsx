@@ -12,14 +12,10 @@ import { TodoList } from './TodoList'
 import { STAT_CARDS, CHART_CARDS,energyUsageData,todosData,machineData , tableHeaders  ,machineTableBody ,tasktableHeaders ,tasktablebody, Alertstablebody ,AlertstableHeaders} from '@/constants/index'
 import { defectData } from '@/data/defectData'
 import { DashboardProps } from '@/types/index'
-import {MachineTable} from "@/components/production/production"
 import {StatsTableDefect} from "@/components/defect-logging/defect-table"
 import { Bell, Search } from 'lucide-react'
 import { Tables } from './Tables'
-import { TaskTable } from './taskTable'
 import SettingsContent from './SettingsContent'; // Adjust the path accordingly
-// import ProductionData from "@/components/production/production"
-import {ProductionData } from "@/data/production-matrData";
 
 export default function DashboardClient({  }: DashboardProps) {
   // user on params
@@ -69,14 +65,11 @@ export default function DashboardClient({  }: DashboardProps) {
       case 'Machine Monitoring':
         return <div><StatsTable data={machineData}/></div>
       case 'Production Metrics':
-        return <div><MachineTable data={ProductionData}/></div>
+        return <div><Tables headers={tableHeaders} body={machineTableBody}/></div>
       case 'Defect Logging':
-        return <div><StatsTableDefect data={defectData}/></div>
+        return <div><StatsTableDefect /></div>
       case 'Tasks':
-        return <div>
-          {/* <Tables headers={tasktableHeaders} body={tasktablebody} /> */}
-          <TaskTable headers={tasktableHeaders} body={tasktablebody} />
-          </div>
+        return <div><Tables headers={tasktableHeaders} body={tasktablebody} /></div>
       case 'Alerts':
         return <div><Tables headers={AlertstableHeaders} body={Alertstablebody} /></div>
       case 'Energy Usage':

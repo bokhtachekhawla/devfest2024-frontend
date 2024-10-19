@@ -55,10 +55,11 @@ export interface MachineData {
 
 export interface DeffectData {
   id: number
-  machine: string
+  machine_id: number
+  machine_type:string
+  machine_name:string
   defect_time: Date
   defect_type: string
-  type: string
 }
 
 export interface DeffectTableProps {
