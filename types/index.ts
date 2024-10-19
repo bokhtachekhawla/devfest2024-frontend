@@ -53,6 +53,17 @@ export interface MachineData {
   status: 'running' | 'ideal' | 'maintenance'
 }
 
+export interface DeffectData {
+  id: number
+  machine: string
+  defect_time: Date
+  defect_type: string
+  type: string
+}
+
+export interface DeffectTableProps {
+  data: DeffectData[]
+}
 export interface MachineTableProps {
   data: MachineData[]
 }

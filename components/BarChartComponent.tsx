@@ -9,7 +9,7 @@ import {
     Legend,
     ResponsiveContainer,
 } from 'recharts';
-import { BarChartCardProps } from '../../../../types/index';
+import { BarChartCardProps } from '../types/index';
 export const BarChartComponent: React.FC<BarChartCardProps> = ({ title, data, dataKey, color }) => {
     return (
 <div className="bg-white p-6 rounded-lg shadow-md">

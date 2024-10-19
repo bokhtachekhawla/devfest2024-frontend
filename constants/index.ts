@@ -1,4 +1,5 @@
-import { SidebarItem, StatCardProps, ChartCardProps, MachineData  } from '../types'
+import { SidebarItem, StatCardProps, ChartCardProps, MachineData  } from '@/types'
+// import {defectData} from "@/data/defectData"
 import { 
   LayoutDashboard, 
   Activity, 
@@ -88,6 +89,9 @@ export const machineData: MachineData[] = [
   { id: '009', temperature: 43, vibration: 10, energy: 32, type: 'Welding Robots', status: 'running' },
 ]
 
+
+
+
 export 
 const machineTypes = [
   'Welding Robots',
@@ -116,3 +120,6 @@ export const defecttableHeaders = [
   { key: 'type', label: 'Type' },
   { key: 'status', label: 'Status' },
 ]
+
+
+
