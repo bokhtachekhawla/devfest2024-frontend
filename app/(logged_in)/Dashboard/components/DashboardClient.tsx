@@ -87,7 +87,7 @@ export default function DashboardClient({  }: DashboardProps) {
               <button type="button" title="Notifications" className="ml-4 bg-white p-2 rounded-full shadow">
                 <Bell className="h-6 w-6 text-gray-500" />
               </button>
-              <button className="ml-4 flex items-center bg-white p-2 rounded-full shadow">
+              <button type='button' title='profile' className="ml-4 flex items-center bg-white p-2 rounded-full shadow">
                 <Image 
                 src="/placeholder.svg" 
                  height={32}
@@ -103,6 +103,7 @@ export default function DashboardClient({  }: DashboardProps) {
           {renderContent()}
         </div>
       </main>
+    </div>
     </div>
   )
 }
