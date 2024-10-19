@@ -77,12 +77,40 @@ export interface FilterState {
   status: string
 }
 
-export 
-interface TableHeader {
+export interface TableHeader {
     key: string;
     label: string;
 }
+export interface TableBody {
+  id: string;
+  machine: string;
+  shifttime: string | null;
+  output: number | null;
+  energy: number;
+  type: string;
+  status: string;
+}
+
 
 export interface MetricsTableProps {
     headers: TableHeader[];
+    body : TableBody[];
+}
+
+
+export interface EnergyData {
+  id: string
+  name: string
+  energyConsumption: { time: number; value: number }[]
+  lastEnergyUsage: number
+}
+
+export interface EnergyTableProps {
+  data: EnergyData[]
+}
+
+export interface ProgressBarProps {
+  current: number;
+  total: number;
+  label: string;
 }

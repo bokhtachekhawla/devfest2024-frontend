@@ -1,4 +1,4 @@
-import { SidebarItem, StatCardProps, ChartCardProps, MachineData  } from '@/types'
+import { SidebarItem, StatCardProps, ChartCardProps, MachineData ,EnergyData , TableBody  } from '@/types'
 // import {defectData} from "@/data/defectData"
 import { 
   LayoutDashboard, 
@@ -107,8 +107,8 @@ export const statuses = ['running', 'ideal', 'maintenance']
 export const tableHeaders = [
   { key: 'id', label: 'Machine' },
   { key: 'shift', label: 'Shift Time' },
+  { key: 'output', label: 'Output' },
   { key: 'type', label: 'Type' },
-  { key: 'vibration', label: 'Output' },
   { key: 'status', label: 'Status' },
 ]
 
@@ -120,6 +120,59 @@ export const defecttableHeaders = [
   { key: 'type', label: 'Type' },
   { key: 'status', label: 'Status' },
 ]
+export const machineTableBody: TableBody[] = [
+  { id: '001', machine: 'Machine A', shifttime: 'Morning', output: 300, energy: 300, type: 'Welding Robots', status: 'running' },
+  { id: '002', machine: 'Machine B', shifttime: 'Morning', output: 510, energy: 510, type: 'Welding Robots', status: 'running' },
+  { id: '003', machine: 'Machine C', shifttime: 'Morning', output: 160, energy: 160, type: 'AGV', status: 'ideal' },
+  { id: '004', machine: 'Machine D', shifttime: 'Morning', output: 200, energy: 200, type: 'Tamping Presses', status: 'maintenance' },
+  { id: '005', machine: 'Machine E', shifttime: 'Morning', output: 325, energy: 325, type: 'Tamping Presses', status: 'maintenance' },
+  { id: '006', machine: 'Machine F', shifttime: 'Morning', output: 179, energy: 179, type: 'Welding Robots', status: 'ideal' },
+  { id: '007', machine: 'Machine G', shifttime: 'Morning', output: 68, energy: 68, type: 'AGV', status: 'ideal' },
+  { id: '008', machine: 'Machine H', shifttime: 'Morning', output: 423, energy: 423, type: 'Tamping Presses', status: 'ideal' },
+  { id: '009', machine: 'Machine I', shifttime: 'Morning', output: 32, energy: 32, type: 'Welding Robots', status: 'running' },
+];
 
 
+
+export const energyData: EnergyData[] = [
+  {
+    id: '001',
+    name: 'Machine 001',
+    energyConsumption: [
+      { time: 0, value: 200 },
+      { time: 1, value: 400 },
+      { time: 2, value: 300 },
+      { time: 3, value: 500 },
+      { time: 4, value: 250 },
+      { time: 5, value: 450 },
+    ],
+    lastEnergyUsage: 230,
+  },
+  {
+    id: '002',
+    name: 'Machine 002',
+    energyConsumption: [
+      { time: 0, value: 300 },
+      { time: 1, value: 500 },
+      { time: 2, value: 400 },
+      { time: 3, value: 600 },
+      { time: 4, value: 350 },
+      { time: 5, value: 550 },
+    ],
+    lastEnergyUsage: 520,
+  },
+  {
+    id: '003',
+    name: 'Machine 003',
+    energyConsumption: [
+      { time: 0, value: 150 },
+      { time: 1, value: 350 },
+      { time: 2, value: 250 },
+      { time: 3, value: 450 },
+      { time: 4, value: 200 },
+      { time: 5, value: 400 },
+    ],
+    lastEnergyUsage: 154,
+  },
+]
 

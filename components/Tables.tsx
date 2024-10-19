@@ -1,7 +1,7 @@
 import React from 'react';
-import {  MetricsTableProps } from '@/types/index';
-// TableHeader
-export const Tables: React.FC<MetricsTableProps> = ({ headers }) => {
+import { TableHeader, MetricsTableProps } from '@/types/index';
+
+export const Tables: React.FC<MetricsTableProps> = ({ headers, body }) => {
     return (
         <div>
             <table className="w-full bg-white rounded-lg overflow-hidden">
@@ -18,18 +18,19 @@ export const Tables: React.FC<MetricsTableProps> = ({ headers }) => {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {/* {filteredData.map((machine) => (
-                        <tr key={machine.id}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Machine {machine.id}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.temperature} C°</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.vibration} db</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.energy} kWatt</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.type}</td>
-                            <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${getStatusColor(machine.status)}`}>
-                                {machine.status}
-                            </td>
+                    {body.map((row, rowIndex) => (
+                        <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                            {/* Iterate over headers to ensure the order of cells matches the headers */}
+                            {headers.map((header) => (
+                                <td
+                                    key={header.key}
+                                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                                >
+                                    {row[header.key as keyof typeof row] ?? 'N/A'}
+                                </td>
+                            ))}
                         </tr>
-                    ))} */}
+                    ))}
                 </tbody>
             </table>
         </div>
