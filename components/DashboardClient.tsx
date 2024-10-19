@@ -15,7 +15,8 @@ import { DashboardProps } from '@/types/index'
 import {StatsTableDefect} from "@/components/defect-logging/defect-table"
 import { Bell, Search } from 'lucide-react'
 import { Tables } from './Tables'
-import ProgressBar from './ProgressBar'
+import SettingsContent from './SettingsContent'; // Adjust the path accordingly
+
 export default function DashboardClient({  }: DashboardProps) {
   // user on params
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -73,7 +74,8 @@ export default function DashboardClient({  }: DashboardProps) {
         return <div><Tables headers={AlertstableHeaders} body={Alertstablebody} /></div>
       case 'Energy Usage':
         return <div><EnergyTable /></div>
-      // Add cases for other tabs here
+      case 'Settings':
+        return <SettingsContent />
       default:
         return <div>Select a tab to view content</div>
     }

@@ -96,13 +96,21 @@ export interface TableBody {
   date : string | null;
 }
 
+export interface UserInfoInputProps {
+  label: string;
+  value: string;
+}
 
 export interface MetricsTableProps {
     headers: TableHeader[];
     body : TableBody[];
 }
 
-
+export interface ActionButtonProps {
+  label: string;
+  onClick: () => void;
+  color?: string; // Default is 'purple', but can be changed
+}
 export interface EnergyData {
   id: string
   name: string
@@ -118,4 +126,11 @@ export interface ProgressBarProps {
   current: number;
   total: number;
   label: string;
+}
+
+export interface ProfileSectionProps {
+  fullName: string;
+  gender: string;
+  email: string;
+  role: string;
 }

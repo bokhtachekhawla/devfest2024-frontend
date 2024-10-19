@@ -62,7 +62,6 @@ export const CHART_CARDS: ChartCardProps[] = [
   }
 ]
 
-
 export const energyUsageData = [
   { name: 'Machine 1', value: 400 },
   { name: 'Machine 2', value: 300 },
@@ -195,6 +194,7 @@ export const tasktablebody: TableBody[] = [
     date: null
   },
 ];
+
 export const AlertstableHeaders = [
   { key: 'id', label: 'Anomalies' },
   { key: 'machine', label: 'Machine' },
@@ -380,3 +380,10 @@ export const energyData: EnergyData[] = [
   },
 ]
 
+
+export const userInfo = {
+  fullName: 'Louiza Hamoud',
+  gender: 'Female',
+  email: 'louiza@example.com',
+  role: 'Admin',
+};
