@@ -9,12 +9,14 @@ import EnergyTable from './EnergyTable'
 import { BarChartComponent } from './BarChartComponent'
 import { StatsTable } from './MachinsTable'
 import { TodoList } from './TodoList'
-import { STAT_CARDS, CHART_CARDS,energyUsageData,todosData,machineData , tableHeaders } from '@/constants/index'
+import { STAT_CARDS, CHART_CARDS,energyUsageData,todosData,machineData , tableHeaders  ,machineTableBody ,tasktableHeaders ,tasktablebody, Alertstablebody ,AlertstableHeaders} from '@/constants/index'
 import { defectData } from '@/data/defectData'
-import { DashboardProps } from '../types/index'
+import { DashboardProps } from '@/types/index'
 import {StatsTableDefect} from "@/components/defect-logging/defect-table"
 import { Bell, Search } from 'lucide-react'
 import { Tables } from './Tables'
+import SettingsContent from './SettingsContent'; // Adjust the path accordingly
+
 export default function DashboardClient({  }: DashboardProps) {
   // user on params
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -63,14 +65,17 @@ export default function DashboardClient({  }: DashboardProps) {
       case 'Machine Monitoring':
         return <div><StatsTable data={machineData}/></div>
       case 'Production Metrics':
-        return <div><Tables headers={tableHeaders}/></div>
+        return <div><Tables headers={tableHeaders} body={machineTableBody}/></div>
       case 'Defect Logging':
         return <div><StatsTableDefect data={defectData}/></div>
       case 'Tasks':
-        return <div>tasks</div>
+        return <div><Tables headers={tasktableHeaders} body={tasktablebody} /></div>
+      case 'Alerts':
+        return <div><Tables headers={AlertstableHeaders} body={Alertstablebody} /></div>
       case 'Energy Usage':
         return <div><EnergyTable /></div>
-      // Add cases for other tabs here
+      case 'Settings':
+        return <SettingsContent />
       default:
         return <div>Select a tab to view content</div>
     }

@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import { DeffectData } from '@/types/index';
 import StatisticsSidebar from "@/components/defect-logging/aside-defect-table";
 import { defectData } from '@/data/defectData';
+import ProgressBar  from '@/components/ProgressBar';
 
 interface DeffectTableProps {
   data: DeffectData[];
-}
+} 
 
 export const StatsTableDefect: React.FC<DeffectTableProps> = ({ data }) => {
   const [filteredData, setFilteredData] = useState<DeffectData[]>(data);
@@ -28,10 +29,10 @@ export const StatsTableDefect: React.FC<DeffectTableProps> = ({ data }) => {
 
   return (
     <div className='flex flex-col md:flex-row p-4'>
-        <div className="mb-4 md:mb-0 md:w-1/3  xl:mr-2 lg:mr-2   " >
+        <div className="mb-4 md:mb-0 md:w-1/3  xl:mr-2 lg:mr-2 flex flex-col  gap-2" >
         <StatisticsSidebar data={defectData}  />
+        <ProgressBar current={10} total={50} label="Defective Machines" />
         </div>
-   
 
       <div className="flex-grow overflow-auto custom-scrollbar xl:ml-2 lg:ml-2 xl:mt-0 lg:mt-0  mt-8  ">
         <table className="w-full bg-white rounded-lg  overflow-hidden">

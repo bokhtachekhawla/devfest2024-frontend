@@ -77,12 +77,60 @@ export interface FilterState {
   status: string
 }
 
-export 
-interface TableHeader {
+export interface TableHeader {
     key: string;
     label: string;
+}
+export interface TableBody {
+  id: string;
+  machine: string;
+  task : string |null; 
+  shifttime: string | null;
+  output: number | null;
+  energy: number| null;
+  assign: string| null;
+  duedate: string| null;
+  type: string;
+  status: string;
+  report : string | null;
+  date : string | null;
+}
+
+export interface UserInfoInputProps {
+  label: string;
+  value: string;
 }
 
 export interface MetricsTableProps {
     headers: TableHeader[];
+    body : TableBody[];
+}
+
+export interface ActionButtonProps {
+  label: string;
+  onClick: () => void;
+  color?: string; // Default is 'purple', but can be changed
+}
+export interface EnergyData {
+  id: string
+  name: string
+  energyConsumption: { time: number; value: number }[]
+  lastEnergyUsage: number
+}
+
+export interface EnergyTableProps {
+  data: EnergyData[]
+}
+
+export interface ProgressBarProps {
+  current: number;
+  total: number;
+  label: string;
+}
+
+export interface ProfileSectionProps {
+  fullName: string;
+  gender: string;
+  email: string;
+  role: string;
 }

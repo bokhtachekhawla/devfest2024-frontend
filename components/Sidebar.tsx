@@ -7,7 +7,7 @@ import Image from 'next/image';
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, setActiveTab }) => {
   return (
     <aside
-      className={`bg-white  transition-all duration-500 ease-in-out transform ${isOpen ? 'w-64' : 'w-20'} flex flex-col overflow-y-auto custom-scrollbar`}
+      className={`bg-white transition-all duration-500 ease-in-out transform ${isOpen ? 'w-64' : ''} flex flex-col overflow-y-auto custom-scrollbar`}
     >
       <div className="p-5  flex justify-between items-center relative">
         {/* Logo Section */}

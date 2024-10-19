@@ -1,20 +1,11 @@
 import React from 'react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-
-interface EnergyData {
-  id: string
-  name: string
-  energyConsumption: { time: number; value: number }[]
-  lastEnergyUsage: number
-}
-
-interface EnergyTableProps {
-  data: EnergyData[]
-}
+import {energyData} from '@/constants/index'
+import { EnergyData ,EnergyTableProps } from '@/types/index'
 
 const EnergyTable: React.FC<EnergyTableProps> = ({ data }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white rounded-lg shadow-md flex-grow overflow-auto custom-scrollbar">
       <table className="w-full">
         <thead className="bg-gray-50">
           <tr>
@@ -54,48 +45,6 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data }) => {
 }
 
 const EnergyTables: React.FC = () => {
-  const energyData: EnergyData[] = [
-    {
-      id: '001',
-      name: 'Machine 001',
-      energyConsumption: [
-        { time: 0, value: 200 },
-        { time: 1, value: 400 },
-        { time: 2, value: 300 },
-        { time: 3, value: 500 },
-        { time: 4, value: 250 },
-        { time: 5, value: 450 },
-      ],
-      lastEnergyUsage: 230,
-    },
-    {
-      id: '002',
-      name: 'Machine 002',
-      energyConsumption: [
-        { time: 0, value: 300 },
-        { time: 1, value: 500 },
-        { time: 2, value: 400 },
-        { time: 3, value: 600 },
-        { time: 4, value: 350 },
-        { time: 5, value: 550 },
-      ],
-      lastEnergyUsage: 520,
-    },
-    {
-      id: '003',
-      name: 'Machine 003',
-      energyConsumption: [
-        { time: 0, value: 150 },
-        { time: 1, value: 350 },
-        { time: 2, value: 250 },
-        { time: 3, value: 450 },
-        { time: 4, value: 200 },
-        { time: 5, value: 400 },
-      ],
-      lastEnergyUsage: 154,
-    },
-  ]
-
   return <EnergyTable data={energyData} />;
 };
 
