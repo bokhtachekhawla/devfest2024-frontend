@@ -16,8 +16,6 @@ const config: Config = {
         blue_logo:"#359aea",
         text_inputs_grey :"#696767",
         text_black : "#1A1A1A",
-
-
       },
     },
   },
