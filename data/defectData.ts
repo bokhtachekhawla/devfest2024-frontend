@@ -17,5 +17,7 @@ export interface DeffectData {
     { id: 7, machine: "Machine 007", defect_type: "Crash", defect_time: new Date(Date.now() - 7 * 60 * 60 * 1000), type: 'tamping Presses' }, // 7 hours ago
     { id: 8, machine: "Machine 008", defect_type: "Burned", defect_time: new Date(Date.now() - 8 * 60 * 60 * 1000), type: 'tamping Presses' }, // 8 hours ago
     { id: 9, machine: "Machine 009", defect_type: "Burned", defect_time: new Date(Date.now() - 9 * 60 * 60 * 1000), type: 'tamping Presses' }, // 9 hours ago
+    { id: 9, machine: "Machine 009", defect_type: "Burned", defect_time: new Date(Date.now() - 9 * 60 * 60 * 1000), type: 'tamping Presses' }, // 9 hours ago
+    { id: 9, machine: "Machine 009", defect_type: "Burned", defect_time: new Date(Date.now() - 9 * 60 * 60 * 1000), type: 'tamping Presses' }, // 9 hours ago
   ];
   
