@@ -6,7 +6,7 @@ import {
   AlertTriangle, 
   ClipboardList, 
   Battery, 
-  Bell, 
+  // Bell, 
   Settings
 } from 'lucide-react'
 
