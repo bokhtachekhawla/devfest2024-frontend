@@ -32,13 +32,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, setActi
       <nav className="flex-1 p-4 space-y-1">
         <ul className="space-y-4">
           {SIDEBAR_ITEMS.map((item, index) => (
-            <li key={index}>
+            <li key={index} >
               <a
                 href="#"
                 onClick={() => setActiveTab(item.name)} // Set active tab on click
                 className={`relative flex items-center px-3 py-2 rounded-lg transition-colors duration-300 ease-in-out hover:bg-purple_button hover:text-white ${isOpen ? 'justify-start' : 'justify-center'} text-gray-700`}
               >
-                <item.icon size={24} className="text-purple_logo" />
+                <item.icon size={24} className="text-purple_logo hover:text-white" />
                 
                 {/* Tooltip when sidebar is collapsed */}
                 {!isOpen && (
@@ -49,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, setActi
 
                 {/* Display item name when sidebar is open */}
                 {isOpen && (
-                  <span className="ml-4 font-semibold text-black">
+                  <span className="ml-4 font-semibold text-black hover:text-white">
                     {item.name}
                   </span>
                 )}
