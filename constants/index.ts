@@ -7,7 +7,6 @@ import {
   ClipboardList, 
   Battery, 
   Bell, 
-  Users, 
   Settings
 } from 'lucide-react'
 

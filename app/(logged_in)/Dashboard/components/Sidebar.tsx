@@ -1,6 +1,6 @@
 import React from 'react';
-import { SidebarProps } from '../../../../types/index';
-import { SIDEBAR_ITEMS } from '../../../../constants/index';
+import { SidebarProps } from '@/types/index';
+import { SIDEBAR_ITEMS } from '@/constants/index';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 
