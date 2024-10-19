@@ -11,7 +11,7 @@ import { StatsTable } from './MachinsTable'
 import { TodoList } from './TodoList'
 import { STAT_CARDS, CHART_CARDS,energyUsageData,todosData,machineData , tableHeaders, defecttableHeaders } from '@/constants/index'
 import { DashboardProps } from '../../../../types/index'
-import { Bell, Search, ChevronDown } from 'lucide-react'
+import { Bell, Search } from 'lucide-react'
 import { Tables } from './Tables'
 export default function DashboardClient({  }: DashboardProps) {
   // user on params
@@ -95,15 +95,15 @@ export default function DashboardClient({  }: DashboardProps) {
               <button type="button" title="Notifications" className="ml-4 bg-white p-2 rounded-full shadow">
                 <Bell className="h-6 w-6 text-gray-500" />
               </button>
-              <button type='button' title='profile' className="ml-4 flex items-center bg-white p-2 rounded-full shadow">
+              <button type='button' title='profile' className="ml-4 flex items-center bg-white p-1 rounded-full shadow">
                 <Image 
-                src="/placeholder.svg" 
+                src="/blank-profile-picture.png" 
                  height={32}
                  width={32} 
                  alt="User" 
                  className="h-8 w-8 rounded-full"
                  />
-                <ChevronDown className="h-4 w-4 ml-2 text-gray-500" />
+                {/* <ChevronDown className="h-4 w-4 ml-2 text-gray-500" /> */}
               </button>
             </div>
           </div>
