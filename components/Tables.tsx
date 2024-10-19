@@ -1,6 +1,6 @@
 import React from 'react';
-import { TableHeader , MetricsTableProps } from '@/types/index';
-
+import {  MetricsTableProps } from '@/types/index';
+// TableHeader
 export const Tables: React.FC<MetricsTableProps> = ({ headers }) => {
     return (
         <div>
