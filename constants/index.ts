@@ -17,6 +17,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   { name: 'Production Metrics', icon: BarChart2 },
   { name: 'Defect Logging', icon: AlertTriangle },
   { name: 'Tasks', icon: ClipboardList },
+  { name : 'Alerts' , icon: AlertTriangle},
   { name: 'Energy Usage', icon: Battery },
   { name: 'Settings', icon: Settings },
 ]
@@ -112,7 +113,148 @@ export const tableHeaders = [
   { key: 'status', label: 'Status' },
 ]
 
+export const tasktableHeaders = [
+  { key: 'id', label: 'Task Description' },
+  { key: 'machine', label: 'Machine' },
+  { key: 'type', label: 'Type' },
+  { key: 'assign', label: 'Assign to' },
+  { key: 'duedate', label: 'Due Date' },
+  { key: 'status', label: 'Status' },
+]
+export const tasktablebody: TableBody[] = [
+  {
+    id: '001', task: 'Machine A', machine: 'Morning', type: '300', assign: 'Welding Robots', duedate: '10/12/24', status: 'running',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '002', task: 'Machine B', machine: 'Morning', type: '510', assign: 'Welding Robots', duedate: '10/12/24', status: 'running',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '003', task: 'Machine C', machine: 'Morning', type: '160', assign: 'AGV', duedate: '10/12/24', status: 'ideal',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '004', task: 'Machine D', machine: 'Morning', type: '200', assign: 'Tamping Presses', duedate: '10/12/24', status: 'maintenance',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '005', task: 'Machine E', machine: 'Morning', type: '325', assign: 'Tamping Presses', duedate: '10/12/24', status: 'maintenance',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '006', task: 'Machine F', machine: 'Morning', type: '179', assign: 'Welding Robots', duedate: '10/12/24', status: 'ideal',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '007', task: 'Machine G', machine: 'Morning', type: '68', assign: 'AGV', duedate: '10/12/24', status: 'ideal',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '008', task: 'Machine H', machine: 'Morning', type: '423', assign: 'Tamping Presses', duedate: '10/12/24', status: 'ideal',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '009', task: 'Machine I', machine: 'Morning', type: '32', assign: 'Welding Robots', duedate: 'running', status: 'running',
+    shifttime: '',
+    output: null,
+    energy: null,
+    report: null,
+    date: null
+  },
+];
+export const AlertstableHeaders = [
+  { key: 'id', label: 'Anomalies' },
+  { key: 'machine', label: 'Machine' },
+  { key: 'type', label: 'Type' },
+  { key: 'date  ', label: 'Date' },
+  { key: 'report', label: 'Reports' },
+]
 
+export const Alertstablebody: TableBody[] = [
+  {
+    id: '001', machine: 'Machine A', type: 'Overheating', date: '2023-10-01', report: 'Temperature exceeded threshold',
+    shifttime: null,
+    output: null,
+    energy: null,
+    task: null,
+    assign: null,
+    duedate: null,
+    status: ''
+  },
+  {
+    id: '002', machine: 'Machine B', type: 'Vibration', date: '2023-10-02', report: 'Vibration levels too high',
+    shifttime: null,
+    output: null,
+    energy: null,
+    task: null,
+    assign: null,
+    duedate: null,
+    status: ''
+  },
+  {
+    id: '003', machine: 'Machine C', type: 'Energy Spike', date: '2023-10-03', report: 'Unexpected energy consumption spike',
+    shifttime: null,
+    output: null,
+    energy: null,
+    task: null,
+    assign: null,
+    duedate: null,
+    status: ''
+  },
+  {
+    id: '004', machine: 'Machine D', type: 'Maintenance Required', date: '2023-10-04', report: 'Scheduled maintenance overdue',
+    shifttime: null,
+    output: null,
+    energy: null,
+    task: null,
+    assign: null,
+    duedate: null,
+    status: ''
+  },
+  {
+    id: '005', machine: 'Machine E', type: 'Sensor Fault', date: '2023-10-05', report: 'Sensor malfunction detected',
+    shifttime: null,
+    output: null,
+    energy: null,
+    task: null,
+    assign: null,
+    duedate: null,
+    status: ''
+  }
+];
 export const defecttableHeaders = [
   { key: 'id', label: 'Machine' },
   { key: 'shift', label: 'Shift Time' },
@@ -120,19 +262,81 @@ export const defecttableHeaders = [
   { key: 'type', label: 'Type' },
   { key: 'status', label: 'Status' },
 ]
+
 export const machineTableBody: TableBody[] = [
-  { id: '001', machine: 'Machine A', shifttime: 'Morning', output: 300, energy: 300, type: 'Welding Robots', status: 'running' },
-  { id: '002', machine: 'Machine B', shifttime: 'Morning', output: 510, energy: 510, type: 'Welding Robots', status: 'running' },
-  { id: '003', machine: 'Machine C', shifttime: 'Morning', output: 160, energy: 160, type: 'AGV', status: 'ideal' },
-  { id: '004', machine: 'Machine D', shifttime: 'Morning', output: 200, energy: 200, type: 'Tamping Presses', status: 'maintenance' },
-  { id: '005', machine: 'Machine E', shifttime: 'Morning', output: 325, energy: 325, type: 'Tamping Presses', status: 'maintenance' },
-  { id: '006', machine: 'Machine F', shifttime: 'Morning', output: 179, energy: 179, type: 'Welding Robots', status: 'ideal' },
-  { id: '007', machine: 'Machine G', shifttime: 'Morning', output: 68, energy: 68, type: 'AGV', status: 'ideal' },
-  { id: '008', machine: 'Machine H', shifttime: 'Morning', output: 423, energy: 423, type: 'Tamping Presses', status: 'ideal' },
-  { id: '009', machine: 'Machine I', shifttime: 'Morning', output: 32, energy: 32, type: 'Welding Robots', status: 'running' },
+  {
+    id: '001', machine: 'Machine A', shifttime: 'Morning', output: 300, energy: 300, type: 'Welding Robots', status: 'running',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '002', machine: 'Machine B', shifttime: 'Morning', output: 510, energy: 510, type: 'Welding Robots', status: 'running',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '003', machine: 'Machine C', shifttime: 'Morning', output: 160, energy: 160, type: 'AGV', status: 'ideal',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '004', machine: 'Machine D', shifttime: 'Morning', output: 200, energy: 200, type: 'Tamping Presses', status: 'maintenance',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '005', machine: 'Machine E', shifttime: 'Morning', output: 325, energy: 325, type: 'Tamping Presses', status: 'maintenance',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '006', machine: 'Machine F', shifttime: 'Morning', output: 179, energy: 179, type: 'Welding Robots', status: 'ideal',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '007', machine: 'Machine G', shifttime: 'Morning', output: 68, energy: 68, type: 'AGV', status: 'ideal',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '008', machine: 'Machine H', shifttime: 'Morning', output: 423, energy: 423, type: 'Tamping Presses', status: 'ideal',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
+  {
+    id: '009', machine: 'Machine I', shifttime: 'Morning', output: 32, energy: 32, type: 'Welding Robots', status: 'running',
+    task: null,
+    assign: null,
+    duedate: null,
+    report: null,
+    date: null
+  },
 ];
-
-
 
 export const energyData: EnergyData[] = [
   {

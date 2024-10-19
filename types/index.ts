@@ -84,11 +84,16 @@ export interface TableHeader {
 export interface TableBody {
   id: string;
   machine: string;
+  task : string |null; 
   shifttime: string | null;
   output: number | null;
-  energy: number;
+  energy: number| null;
+  assign: string| null;
+  duedate: string| null;
   type: string;
   status: string;
+  report : string | null;
+  date : string | null;
 }
 
 
