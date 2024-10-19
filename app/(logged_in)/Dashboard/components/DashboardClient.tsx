@@ -5,12 +5,14 @@ import { Sidebar } from './Sidebar'
 import { StatCard } from './StatCard'
 import { ChartCard } from './ChartComponent'
 import { PieChart } from './PieChart'
+import EnergyTable from './EnergyTable'
 import { BarChartComponent } from './BarChartComponent'
-import { StatsTable } from './StatsTable'
+import { StatsTable } from './MachinsTable'
 import { TodoList } from './TodoList'
-import { STAT_CARDS, CHART_CARDS,energyUsageData,todosData,machineData } from '../../../../constants/index'
+import { STAT_CARDS, CHART_CARDS,energyUsageData,todosData,machineData , tableHeaders, defecttableHeaders } from '@/constants/index'
 import { DashboardProps } from '../../../../types/index'
 import { Bell, Search, ChevronDown } from 'lucide-react'
+import { Tables } from './Tables'
 export default function DashboardClient({  }: DashboardProps) {
   // user on params
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -59,7 +61,13 @@ export default function DashboardClient({  }: DashboardProps) {
       case 'Machine Monitoring':
         return <div><StatsTable data={machineData}/></div>
       case 'Production Metrics':
-        return <div></div>
+        return <div><Tables headers={tableHeaders}/></div>
+      case 'Defect Logging':
+        return <div><Tables headers={defecttableHeaders}/></div>
+      case 'Tasks':
+        return <div>tasks</div>
+      case 'Energy Usage':
+        return <div><EnergyTable /></div>
       // Add cases for other tabs here
       default:
         return <div>Select a tab to view content</div>

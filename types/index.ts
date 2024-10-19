@@ -65,3 +65,13 @@ export interface FilterState {
   type: string
   status: string
 }
+
+export 
+interface TableHeader {
+    key: string;
+    label: string;
+}
+
+export interface MetricsTableProps {
+    headers: TableHeader[];
+}

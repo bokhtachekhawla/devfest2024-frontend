@@ -99,3 +99,20 @@ const machineTypes = [
 ]
 
 export const statuses = ['running', 'ideal', 'maintenance']
+
+export const tableHeaders = [
+  { key: 'id', label: 'Machine' },
+  { key: 'shift', label: 'Shift Time' },
+  { key: 'type', label: 'Type' },
+  { key: 'vibration', label: 'Output' },
+  { key: 'status', label: 'Status' },
+]
+
+
+export const defecttableHeaders = [
+  { key: 'id', label: 'Machine' },
+  { key: 'shift', label: 'Shift Time' },
+  { key: 'energy', label: 'Energy' },
+  { key: 'type', label: 'Type' },
+  { key: 'status', label: 'Status' },
+]
