@@ -29,30 +29,43 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
 
   return (
     <div className='flex h-full gap-4'>
+      <div>
+      <div className='flex flex-col space-y-4 mb-4'>
+        <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
+                    Add Machine
+                </button>
+                <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
+                    Edit Machine
+                </button>
+                <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
+                    Delete Machine
+                </button>
+        </div>
       <FilterCard onFilterChange={handleFilterChange} />
+      </div>
+     
       <div className="flex-grow overflow-auto custom-scrollbar">
         <table className="w-full bg-white rounded-lg overflow-hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Machine</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temperature</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vibration</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Energy</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Maintenance</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredData.map((machine) => (
               <tr key={machine.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Machine {machine.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.temperature} C°</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.vibration} db</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.energy} kWatt</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Machine {machine.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.type}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{new Date(machine.Last_Maintenance).toLocaleDateString()}</td>
                 <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${getStatusColor(machine.status)}`}>
+
                   {machine.status}
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.type}</td>
               </tr>
             ))}
           </tbody>

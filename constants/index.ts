@@ -78,15 +78,15 @@ export const todosData = [
 ];
 
 export const machineData: MachineData[] = [
-  { id: '001', temperature: 38, vibration: 25, energy: 300, type: 'tamping Presses', status: 'running' },
-  { id: '002', temperature: 40, vibration: 66, energy: 510, type: 'Welding Robots', status: 'running' },
-  { id: '003', temperature: 90, vibration: 41, energy: 160, type: 'AGV', status: 'ideal' },
-  { id: '004', temperature: 12, vibration: 59, energy: 200, type: 'tamping Presses', status: 'maintenance' },
-  { id: '005', temperature: 34, vibration: 47, energy: 325, type: 'tamping Presses', status: 'maintenance' },
-  { id: '006', temperature: 42, vibration: 32, energy: 179, type: 'Welding Robots', status: 'ideal' },
-  { id: '007', temperature: 50, vibration: 55, energy: 68, type: 'AGV', status: 'ideal' },
-  { id: '008', temperature: 25, vibration: 65, energy: 423, type: 'tamping Presses', status: 'ideal' },
-  { id: '009', temperature: 43, vibration: 10, energy: 32, type: 'Welding Robots', status: 'running' },
+  {id:1 ,name: '001', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'tamping Presses', status: 'running' },
+  {id:1 ,name: '002', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'Welding Robots', status: 'running' },
+  {id:1 ,name: '003', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'AGV', status: 'ideal' },
+  {id:1 ,name: '004', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'tamping Presses', status: 'maintenance' },
+  {id:1 ,name: '005', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'tamping Presses', status: 'maintenance' },
+  {id:1 ,name: '006', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'Welding Robots', status: 'ideal' },
+  {id:1 ,name: '007', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'], type: 'AGV', status: 'ideal' },
+  {id:1 ,name: '008', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'tamping Presses', status: 'ideal' },
+  {id:1 ,name: '009', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'], type: 'Welding Robots', status: 'running' },
 ]
 
 
@@ -106,10 +106,11 @@ export const statuses = ['running', 'ideal', 'maintenance']
 
 export const tableHeaders = [
   { key: 'id', label: 'Machine' },
-  { key: 'shift', label: 'Shift Time' },
-  { key: 'output', label: 'Output' },
   { key: 'type', label: 'Type' },
-  { key: 'status', label: 'Status' },
+  { key: 'starttiem', label: 'Start Time' },
+  { key: 'endTime', label: 'End Time' },
+  { key: 'output', label: 'Output' },
+  { key: 'status', label: 'Target' },
 ]
 
 export const tasktableHeaders = [

@@ -30,6 +30,17 @@ export const StatsTableDefect: React.FC<DeffectTableProps> = ({ data }) => {
   return (
     <div className='flex flex-col md:flex-row p-4'>
         <div className="mb-4 md:mb-0 md:w-1/3  xl:mr-2 lg:mr-2 flex flex-col  gap-2" >
+        <div className='flex flex-col space-y-4'>
+        <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
+                    Add Defect
+                </button>
+                <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
+                    Edit Defect
+                </button>
+                <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
+                    Delete Defect
+                </button>
+        </div>
         <StatisticsSidebar data={defectData}  />
         <ProgressBar current={10} total={50} label="Defective Machines" />
         </div>

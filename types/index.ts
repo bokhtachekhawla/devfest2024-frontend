@@ -45,11 +45,11 @@ export interface TodoListProps {
 }
 
 export interface MachineData {
-  id: string
-  temperature: number
-  vibration: number
-  energy: number
+  id :number
+  name: string
   type: string
+  Last_Maintenance : Date
+  details : any[]
   status: 'running' | 'ideal' | 'maintenance'
 }
 
