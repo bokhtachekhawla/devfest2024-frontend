@@ -94,7 +94,7 @@
 
 "use client";
 import { FormEvent, useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { useRouter } from "next/navigation";
 import api from "@/lib/axios"; // Make sure this path points to your axios configuration
 
