@@ -1,10 +1,15 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
+
 const api = axios.create({
-  baseURL: "https://d0af-105-235-130-20.ngrok-free.app", 
+  baseURL: process.env.BASE_URL, 
   headers: {
     "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "69420",
   },
+//   withCredentials:true,
+  
+
 });
 api.interceptors.request.use(
   (config) => {

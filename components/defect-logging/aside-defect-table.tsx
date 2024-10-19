@@ -37,7 +37,6 @@ const StatisticsSidebar: React.FC<StatisticsSidebarProps> = ({ data }) => {
   return (
     
     <aside className={`bg-white shadow-md p-4 lg:rounded-l-lg rounded-lg`}>
-        
       <h2>Defect Statistics</h2>
       <Pie data={chartData} />
     </aside>
