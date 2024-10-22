@@ -34,7 +34,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, setActi
           {SIDEBAR_ITEMS.map((item, index) => (
             <li key={index} >
               <a
-                href="#"
+                href="/"
                 // Set active tab on click
                 className={`relative flex items-center px-3 py-2 rounded-lg transition-colors duration-300 ease-in-out hover:bg-purple_button hover:text-white ${isOpen ? 'justify-start' : 'justify-center'} text-gray-700`}
                 onClick={() => setActiveTab(item.name)} // Set active tab on click
@@ -75,10 +75,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, setActi
       <footer className="p-4 text-center">
         {isOpen && (
           <p className="text-sm text-gray-500">
-            © 2024 Your Brand
+            © 2024 gearLink
           </p>
         )}
       </footer>
     </aside>
   );
 };
+

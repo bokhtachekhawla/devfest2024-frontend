@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableHeader, MetricsTableProps } from '@/types/index';
+import { MetricsTableProps } from '@/types/index';
 
 export const TaskTable: React.FC<MetricsTableProps> = ({ headers, body }) => {
     // Function to get the status color based on status value
@@ -41,6 +41,8 @@ export const TaskTable: React.FC<MetricsTableProps> = ({ headers, body }) => {
                                 </th>
                             ))}
                         </tr>
+
+                        
                     </thead>
                     <tbody className="divide-y divide-gray-200">
                         {body.map((row, rowIndex) => (

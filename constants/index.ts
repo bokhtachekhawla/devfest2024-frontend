@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 
 export const SIDEBAR_ITEMS: SidebarItem[] = [
-  { name: 'Dashboard', icon: LayoutDashboard },
+  { name: 'Dashboard', icon: LayoutDashboard  },
   { name: 'Machine Monitoring', icon: Activity },
   { name: 'Production Metrics', icon: BarChart2 },
   { name: 'Defect Logging', icon: AlertTriangle },

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { ProfileSectionProps } from '@/types/index'; // Adjust the path accordingly
 import Image from 'next/image'; // Adjust the path accordingly
-import { FaSearch, FaPlus, FaKey, FaEye, FaEyeSlash } from 'react-icons/fa'; // Import necessary icons
+import {FaPlus } from 'react-icons/fa'; // Import necessary icons
 
 export const ProfileSection: React.FC<ProfileSectionProps> = ({ fullName, gender, email, role }) => {
     const [isEditable, setIsEditable] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showAddForm, setShowAddForm] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [searchResults, setSearchResults] = useState<any>(null);
     const [profilePicture, setProfilePicture] = useState('/blank-profile-picture.png'); // Default profile picture path
 
@@ -253,7 +254,8 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({ fullName, gender
                                             className="bg-gray-500 text-white px-3 py-2 rounded-md ml-2" // Styling for the show/hide button
                                             onClick={togglePasswordVisibility} // Toggle function for password visibility
                                         >
-                                            {showPassword ? 'Hide' : 'Show'} // Button text based on visibility state
+                                            {showPassword ? 'Hide' : 'Show'}
+                                             {/* // Button text based on visibility state */}
                                         </button>
                                     </div>
                                 </div>

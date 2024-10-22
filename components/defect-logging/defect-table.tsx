@@ -361,16 +361,18 @@
 
 "use client";
 import React, { useState } from 'react';
-import { DeffectData } from '@/types/index';
+import { DeffectData } from '@/data/defectData';
 import StatisticsSidebar from "@/components/defect-logging/aside-defect-table";
 import { defectData } from '@/data/defectData';
-import ProgressBar  from '@/components/ProgressBar';
+import ProgressBar  from '@/components/progres/ProgressBar';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 interface DeffectTableProps {
   data: DeffectData[];
 }
 
 export const StatsTableDefect: React.FC<DeffectTableProps> = ({ data }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [filteredData, setFilteredData] = useState<DeffectData[]>(data);
 
   const getSpecifityColor = (secifity: string) => {
@@ -390,17 +392,11 @@ export const StatsTableDefect: React.FC<DeffectTableProps> = ({ data }) => {
 
   return (
     <div className='flex flex-col md:flex-row p-4'>
-        <div className="mb-4 md:mb-0 md:w-1/3  xl:mr-2 lg:mr-2 flex flex-col  gap-2" >
+        <div className="mb-4 md:mb-0 md:w-1/3  xl:mr-2  w-[20%] lg:mr-2 flex flex-col  gap-2" >
         <div className='flex flex-col space-y-4 mb-4'>
           <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
              Add Machine
           </button>
-           <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
-             Edit Machine
-           </button>
-           <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
-             Delete Machine
-           </button>
          </div>
         <StatisticsSidebar data={defectData}  />
         <ProgressBar current={10} total={50} label="Defective Machines" />
@@ -414,18 +410,37 @@ export const StatsTableDefect: React.FC<DeffectTableProps> = ({ data }) => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Machine Type</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Specify</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Defect Time</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredData.map((deffect) => (
               <tr key={deffect.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{deffect.machine}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{deffect.type}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{deffect.machine_name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{deffect.machine_type}</td>
                 <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${getSpecifityColor(deffect.defect_type)}`}>
                   {deffect.defect_type}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   {new Date(deffect.defect_time).toLocaleDateString()}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
+                  <button
+                    type="button"
+                    className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
+                    aria-label="Edit"
+                    onClick={() =>{} }
+                  >
+                    <FaEdit className="mr-1" /> 
+                  </button>
+                  <button
+                    type="button"
+                    className="text-red-600 hover:text-red-900 flex items-center transition duration-150 ease-in-out"
+                    aria-label="Delete"
+                    onClick={() => {}}
+                  >
+                    <FaTrash className="mr-1" /> 
+                  </button>
                 </td>
               </tr>
             ))}
