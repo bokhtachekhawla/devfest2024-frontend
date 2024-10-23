@@ -1,4 +1,4 @@
-import { ProfileSection } from '@/components/profile/ProfileSection';
+import { ProfileSection } from '@/components/settings/ProfileSection';
 import { SettingsMenu } from '@/components/settings/SettingsMenu';
 
 const Settings: React.FC = () => {

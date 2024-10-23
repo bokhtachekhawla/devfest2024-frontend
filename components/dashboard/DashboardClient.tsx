@@ -1,26 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import React, { useState } from 'react'
-import Image from 'next/image'
-import { Sidebar } from '../sidebar/Sidebar'
-import { StatCard } from '../StatCard'
-import { ChartCard } from '../ChartComponent'
-import { PieChart } from '../PieChart'
-import EnergyTable from '../energy/EnergyTable'
-import { BarChartComponent } from '../BarChartComponent'
-import { StatsTable } from '../machine/MachinsTable'
+import { StatCard } from '../common-components/StatCard'
+import { ChartCard } from '../common-components/ChartComponent'
+import { PieChart } from '../common-components/PieChart'
+import { BarChartComponent } from '../common-components/BarChartComponent'
 import { TodoList } from '@/components/tasks/TodoList'
-import { STAT_CARDS, CHART_CARDS,energyUsageData ,todosData,machineData  ,energyData  ,tasktableHeaders ,taskTableBody, alertsTableBody ,AlertstableHeaders} from '@/constants/index'
-import { defectData } from '@/data/defectData'
+import { STAT_CARDS, CHART_CARDS,energyUsageData ,todosData} from '@/constants/index'
 
-import { DashboardProps } from '@/types/index'
-import {MachineTable} from "@/components/production/production"
-import {StatsTableDefect} from "@/components/defect-logging/defect-table"
-import { Bell, Search } from 'lucide-react'
-import { Tables } from '../Tables'
-import { TaskTable } from '../tasks/taskTable'
-import SettingsContent from '@/components/settings/SettingsContent'; // Adjust the path accordingly
 // import ProductionData from "@/components/production/production"
-import {ProductionData } from "@/data/production-matrData";
 
 export default function DashboardClient() {
   // user on params

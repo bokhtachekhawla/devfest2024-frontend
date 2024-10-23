@@ -17,10 +17,12 @@
 import React from 'react'
 import {StatsTableDefect} from '@/components/defect-logging/defect-table'
 import { defectData } from '@/data/defectData'
-import { DashboardProps } from '../../../types/index'
+import { DashboardProps } from '@/types/index'
+
+// import Layout from "@/app/layout";
 
 
-export default function DefectsPage({ user }: DashboardProps) {
+export default function DefectsPage({  }: DashboardProps) {
   return (
         <StatsTableDefect data={defectData} />
   )

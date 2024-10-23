@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { ProductionType } from '@/data/production-matrData';
 import { FaEdit, FaTrash } from 'react-icons/fa';

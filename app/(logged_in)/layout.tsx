@@ -13,7 +13,7 @@ interface LayoutProps {
     }
 }
 
-export default function Layout({ children , user  }: LayoutProps) {
+export default function Layout({ children   }: LayoutProps) {
     const [sidebarOpen, setSidebarOpen] = useState(true) // Pour gérer l'ouverture du sidebar
     const [activeTab, setActiveTab] = useState('') // Control active tab
 

@@ -98,11 +98,7 @@ export interface MetricsTableProps {
     body : TableBody[];
 }
 
-export interface ActionButtonProps {
-  label: string;
-  onClick: () => void;
-  color?: string; // Default is 'purple', but can be changed
-}
+
 export interface EnergyData {
   id: string
   name: string

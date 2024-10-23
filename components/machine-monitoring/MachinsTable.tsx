@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 import { MachineData, MachineTableProps } from '../../types/index'
 import { FilterCard } from './FilterCard'

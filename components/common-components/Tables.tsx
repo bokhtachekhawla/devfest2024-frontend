@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import { MetricsTableProps } from '@/types/index';
 import { FaTrash } from 'react-icons/fa';
