@@ -15,17 +15,13 @@
 
 // pages/defects/index.tsx
 import React from 'react'
-import Layout from '@/components/layout/Layout'  // Assurez-vous que le chemin est correct
 import {StatsTableDefect} from '@/components/defect-logging/defect-table'
 import { defectData } from '@/data/defectData'
+import { DashboardProps } from '../../../types/index'
 
-export default function DefectsPage() {
+
+export default function DefectsPage({ user }: DashboardProps) {
   return (
-    <Layout>
-      <div className="p-6">
-        <h1 className="text-3xl font-bold mb-6">Defect Logs</h1>
         <StatsTableDefect data={defectData} />
-      </div>
-    </Layout>
   )
 }
