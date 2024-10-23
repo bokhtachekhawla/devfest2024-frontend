@@ -8,7 +8,7 @@ import { PieChart } from '../PieChart'
 import EnergyTable from '../energy/EnergyTable'
 import { BarChartComponent } from '../BarChartComponent'
 import { StatsTable } from '../machine/MachinsTable'
-import { TodoList } from '../TodoList'
+import { TodoList } from '../tasks/TodoList'
 import { STAT_CARDS, CHART_CARDS,energyUsageData ,todosData,machineData  ,energyData  ,tasktableHeaders ,taskTableBody, alertsTableBody ,AlertstableHeaders} from '@/constants/index'
 import { defectData } from '@/data/defectData'
 

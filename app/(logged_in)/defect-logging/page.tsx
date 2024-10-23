@@ -15,7 +15,6 @@
 
 // pages/defects/index.tsx
 import React from 'react'
-import Layout from '@/components/layout/Structure'  // Assurez-vous que le chemin est correct
 import {StatsTableDefect} from '@/components/defect-logging/defect-table'
 import { defectData } from '@/data/defectData'
 import { DashboardProps } from '../../../types/index'
