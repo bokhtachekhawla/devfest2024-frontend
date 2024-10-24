@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChartCardProps } from '../../types/index';
+import { ChartCardProps } from '@/types/index';
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer
 } from 'recharts';
