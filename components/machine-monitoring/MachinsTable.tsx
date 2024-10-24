@@ -1,22 +1,51 @@
 "use client"
-import React, { useState } from 'react'
-import { MachineData, MachineTableProps } from '../../types/index'
+
+import React, { useState, useEffect } from 'react'
+import { MachineData, MachineTableProps, SensorReading } from '../../types/index'
 import { FilterCard } from './FilterCard'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import Image from 'next/image'
+import api from "@/lib/axios"
 
 export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
   const [filteredData, setFilteredData] = useState<MachineData[]>(data)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMachine, setSelectedMachine] = useState<MachineData | null>(null);
+  const [sensorData, setSensorData] = useState<SensorReading[]>([]);
+  const [isLoadingSensorData, setIsLoadingSensorData] = useState(false);
 
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleModal = async (machine: MachineData | null = null) => {
+    setIsModalOpen(!isModalOpen);
+    setSelectedMachine(machine);
+    if (machine) {
+      await fetchSensorData(machine.id);
+    } else {
+      setSensorData([]);
+    }
+  };
+
+  const fetchSensorData = async (machineId: number) => {
+    setIsLoadingSensorData(true);
+    try {
+      const response = await api.get(`/api/sensor-readings?machine_id=${machineId}`);
+      setSensorData(response.data.data);
+    } catch (error) {
+      console.error('Error fetching sensor data:', error);
+      setSensorData([]);
+    } finally {
+      setIsLoadingSensorData(false);
+    }
+  };
 
   const getStatusColor = (status: MachineData['status']) => {
     switch (status) {
       case 'running':
         return 'text-purple-600'
-      case 'ideal':
+      case 'idle':
         return 'text-green-500'
       case 'maintenance':
         return 'text-red-500'
@@ -27,43 +56,43 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
 
   const DetailsIcon = () => (
     <Image
-    alt='details-icon'
-    src="/image.png"
-    height={20}
-    width={20}
+      alt='details-icon'
+      src="/image.png"
+      height={20}
+      width={20}
     />
-
   );
-  const machineMockData = {
-    machine_name: "Machine001",
-    test_pressure: 5.0,
-    leak_rate: 0.0,
-    test_duration: 45,
-    temperature: 25,
-    status: "pass",
-    fluid_type: "air",
-    seal_condition: "good",
-    test_cycle_count: 1500,
-    timestamp: "2024-10-14 10:50:00"
-  };
+
   const handleFilterChange = (filters: { type: string; status: string }) => {
     const newFilteredData = data.filter((machine) => {
-      const typeMatch = !filters.type || machine.type === filters.type
+      const typeMatch = !filters.type || machine.machine_type === filters.type
       const statusMatch = !filters.status || machine.status === filters.status
       return typeMatch && statusMatch
     })
     setFilteredData(newFilteredData)
   }
 
+  const renderSensorData = (reading: SensorReading) => {
+    const sensorData = JSON.parse(reading.sensor_data);
+    return (
+      <div key={reading.id} className="mb-4 p-4 bg-gray-100 rounded-lg">
+        <p><strong>Reading Time:</strong> {new Date(reading.reading_time).toLocaleString()}</p>
+        {Object.entries(sensorData).map(([key, value]) => (
+          <p key={key}><strong>{key.replace(/_/g, ' ')}:</strong> {JSON.stringify(value)}</p>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className='flex h-full gap-2'>
       <div>
-      <div className='flex flex-col space-y-4 mb-4'>
-        <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
-                    Add Machine
-        </button>        
-      </div>
-      <FilterCard onFilterChange={handleFilterChange} />
+        <div className='flex flex-col space-y-4 mb-4'>
+          <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
+            Add Machine
+          </button>        
+        </div>
+        <FilterCard onFilterChange={handleFilterChange} />
       </div>
      
       <div className="flex-grow overflow-auto custom-scrollbar">
@@ -81,88 +110,28 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredData.map((machine) => (
               <tr key={machine.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Machine {machine.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.type}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{new Date(machine.Last_Maintenance).toLocaleDateString()}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{machine.machine_name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.machine_type}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{new Date(machine.last_maintenance).toLocaleDateString()}</td>
                 <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${getStatusColor(machine.status)}`}>
-
                   {machine.status}
                 </td>
-                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{machine.type}</td>
-                 */}
-
-<td className="px-6 py-4 whitespace-nowrap text-sm font-medium items-center  justify-center" >
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium items-center  justify-center" >
                   <button
                     type="button"
                     className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
                     aria-label="Details"
-                    onClick={toggleModal}
+                    onClick={() => toggleModal(machine)}
                   >
-                    {/* <FaEdit className="mr-1" />  */}
                     <DetailsIcon />
-
                   </button>
                 </td>
-
-                {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-200 bg-opacity-80   min-h-screen flex items-center justify-center">
-                    <div className="bg-white rounded-lg shadow-lg p-6 w-full sm:max-w-lg">
-                        <div className="flex justify-between items-center mb-4">
-                            <button onClick={toggleModal} className="text-gray-500">Back</button>
-                            <h2 className="text-xl font-semibold text-purple_button">Machine {machine.name}</h2>
-                            <button onClick={toggleModal} className="text-gray-500">X</button>
-                        </div>
-
-                        <div>
-                        <ul className="text-gray-600">
-          <li><strong>test_pressure</strong>: {machineMockData.test_pressure}</li>
-          <li><strong>leak_rate</strong>: {machineMockData.leak_rate}</li>
-          <li><strong>test_duration</strong>: {machineMockData.test_duration}</li>
-          <li><strong>temperature</strong>: {machineMockData.temperature}</li>
-          <li><strong>status</strong>: {machineMockData.status}</li>
-          <li><strong>fluid_type</strong>: {machineMockData.fluid_type}</li>
-          <li><strong>seal_condition</strong>: {machineMockData.seal_condition}</li>
-          <li><strong>test_cycle_count</strong>: {machineMockData.test_cycle_count}</li>
-          <li><strong>timestamp</strong>: {machineMockData.timestamp}</li>
-        </ul>
-
-                        </div>
-                        
-
-
-                        
-                    </div>
-                </div>
-
-    //     <div className="bg-gray-800 bg-opacity-80 min-h-screen flex items-center justify-center">
-    //   <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full relative">
-    //     <button className="absolute top-4 left-4 text-blue-600">Back</button>
-    //     <button className="absolute top-4 right-4 text-red-600">X</button>
-
-    //     <h1 className="text-2xl font-bold text-purple-600 mb-4 text-center">
-    //       {machineMockData.machine_name}
-    //     </h1>
-    //     <ul className="text-gray-600 space-y-1">
-    //       <li><strong>test_pressure</strong>: {machineMockData.test_pressure}</li>
-    //       <li><strong>leak_rate</strong>: {machineMockData.leak_rate}</li>
-    //       <li><strong>test_duration</strong>: {machineMockData.test_duration}</li>
-    //       <li><strong>temperature</strong>: {machineMockData.temperature}</li>
-    //       <li><strong>status</strong>: {machineMockData.status}</li>
-    //       <li><strong>fluid_type</strong>: {machineMockData.fluid_type}</li>
-    //       <li><strong>seal_condition</strong>: {machineMockData.seal_condition}</li>
-    //       <li><strong>test_cycle_count</strong>: {machineMockData.test_cycle_count}</li>
-    //       <li><strong>timestamp</strong>: {machineMockData.timestamp}</li>
-    //     </ul>
-    //   </div>
-    // </div>
-            )}
-
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
                   <button
                     type="button"
                     className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
                     aria-label="Edit"
-                    onClick={() =>{} }
+                    onClick={() => {}}
                   >
                     <FaEdit className="mr-1" /> 
                   </button>
@@ -180,6 +149,30 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
           </tbody>
         </table>
       </div>
+
+      {isModalOpen && selectedMachine && (
+        <div className="fixed inset-0 bg-gray-200 bg-opacity-80 min-h-screen flex items-center justify-center overflow-y-auto">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl m-4">
+            <div className="flex justify-between items-center mb-4">
+              <button onClick={() => toggleModal()} className="text-gray-500">Back</button>
+              <h2 className="text-xl font-semibold text-purple_button">{selectedMachine.machine_name}</h2>
+              <button onClick={() => toggleModal()} className="text-gray-500">X</button>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Sensor Readings</h3>
+              {isLoadingSensorData ? (
+                <p>Loading sensor data...</p>
+              ) : sensorData.length > 0 ? (
+                <div className="max-h-96 overflow-y-auto">
+                  {sensorData.map(renderSensorData)}
+                </div>
+              ) : (
+                <p>No sensor data available</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
