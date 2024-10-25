@@ -25,8 +25,6 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 
 export const STAT_CARDS: StatCardProps[] = [
   { title: 'Machine Alerts', value: '15', icon: AlertTriangle, color: 'red' },
-  { title: 'Tasks Completed', value: '32', icon: ClipboardList, color: 'green' },
-  { title: 'Production Rate', value: '98%', icon: BarChart2, color: 'blue' },
   { title: 'Energy Efficiency', value: '87%', icon: Battery, color: 'yellow' },
 ]
 
