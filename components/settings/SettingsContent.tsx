@@ -6,12 +6,7 @@ const Settings: React.FC = () => {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Profile Section */}
       <div className="lg:col-span-2">
-        <ProfileSection
-          fullName="Louiza Hamoud"
-          gender="Female"
-          email="louiza@example.com"
-          role="Admin"
-        />
+        <ProfileSection/>
       </div>
 
       {/* Settings Menu */}

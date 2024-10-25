@@ -8,6 +8,5 @@ import { DashboardProps } from "@/types";
 export default function AlertsPage({  }: DashboardProps) {
     return (
         <SettingsContent />
-
     )
   } 
