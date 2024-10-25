@@ -16,7 +16,6 @@ interface LayoutProps {
 export default function Layout({ children   }: LayoutProps) {
     const [sidebarOpen, setSidebarOpen] = useState(true) // Pour gérer l'ouverture du sidebar
     const [activeTab, setActiveTab] = useState('') // Control active tab
-
     return (
         <div className="flex h-screen bg-gray-100 w-full">
             <Sidebar
