@@ -78,19 +78,6 @@ export const todosData = [
   'Lorem Ipsum has been the industry’s',
 ];
 
-export const machineData: MachineData[] = [
-  {id:1 ,name: '001', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'tamping Presses', status: 'running' },
-  {id:1 ,name: '002', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'Welding Robots', status: 'running' },
-  {id:1 ,name: '003', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'AGV', status: 'ideal' },
-  {id:1 ,name: '004', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'tamping Presses', status: 'maintenance' },
-  {id:1 ,name: '005', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'tamping Presses', status: 'maintenance' },
-  {id:1 ,name: '006', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'Welding Robots', status: 'ideal' },
-  {id:1 ,name: '007', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'], type: 'AGV', status: 'ideal' },
-  {id:1 ,name: '008', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'],  type: 'tamping Presses', status: 'ideal' },
-  {id:1 ,name: '009', Last_Maintenance:  new Date(Date.now() - 1 * 60 * 60 * 1000) , details: ['sensor s data'], type: 'Welding Robots', status: 'running' },
-]
-
-
 
 
 export 
@@ -167,10 +154,10 @@ export const tableHeaders = [
 ];
 
 export const tasktableHeaders = [
+  { key: 'task_id', label: 'Task ID' },
   { key: 'task', label: 'Task Description' },
-  { key: 'machine', label: 'Machine' },
-  { key: 'type', label: 'Type' },
   { key: 'assign', label: 'Assign to' },
+  { key: 'date', label: 'Creation Date' },
   { key: 'duedate', label: 'Due Date' },
   { key: 'status', label: 'Status' },
 ];

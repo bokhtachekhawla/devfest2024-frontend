@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { MachineData, MachineTableProps, SensorReading } from '../../types/index'
+import { MachineData, MachineTableProps, SensorReading } from '@/types/index'
 import { FilterCard } from './FilterCard'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import Image from 'next/image'

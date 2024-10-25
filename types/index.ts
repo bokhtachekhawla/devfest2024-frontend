@@ -55,6 +55,17 @@ export interface MachineData {
   updated_at: string;
 }
 
+export interface TaskData {
+  id: number;
+  task_id :number;
+  user_id: number;
+  user_full_name: string;
+  task_description: string;
+  due_date: string;
+  status: 'todo'|'pending'|'completed';
+  created_at:string;
+}
+
 export interface SensorReading {
   id: number;
   machine_id: number;
