@@ -10,7 +10,6 @@ export interface DashboardProps {
 export interface SidebarProps {
   isOpen: boolean
   toggleSidebar: () => void
-  setActiveTab: (tabName: string) => void;
 }
 
 export interface StatCardProps {
