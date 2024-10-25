@@ -72,12 +72,13 @@ type ProductionType = {
   machine_id: number;
   machine_name: string;
   machine_type: string;
-  start_time: Date;
-  end_time: Date;
+  start_time: string;
+  end_time: string;
   output_quantity: string;
   target_quantity: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface MachineTableProps {
   data: ProductionType[]; // This should match the imported type
 }

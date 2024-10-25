@@ -504,6 +504,9 @@
 
 
 
+
+
+
 "use client";
 import api from "@/lib/axios";
 import React, { useState, useEffect } from "react";
@@ -639,8 +642,8 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data  , onAdd 
       machine_name: formData.get('machine_name') as string,
       output_quantity: formData.get('output_quantity_quantity') as string,
       target_quantity: formData.get('target_quantity') as string,
-      start_time: new Date(formatDate(formData.get('start_time') as string)), // Convert to Date
-      end_time: new Date(formatDate(formData.get('end_time') as string)), // Convert to Date
+      start_time: formatDate(formData.get('start_time') as string), // Convert to Date
+      end_time: formatDate(formData.get('end_time') as string), // Convert to Date
       machine_type: selectedPro.machine_type, // Ensure to maintain other required properties
       // output_quantity: selectedPro.output_quantity, // Or however you want to set this
       // target: selectedPro.target // Or however you want to set this
@@ -820,9 +823,9 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data  , onAdd 
                   <input
                     type="datetime-local"
                     name="start_time"
-                    // defaultValue={new Date(selectedPro.start_time).toISOString().slice(0, 16)}
+                    defaultValue={new Date(selectedPro.start_time).toISOString().slice(0, 16)}
                     // Usage
-  defaultValue={formatDate(new Date(selectedPro.start_time))}
+  // defaultValue={formatDate(new Date(selectedPro.start_time))}
                     className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
                     required
                     title="Start Time"
@@ -834,8 +837,8 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data  , onAdd 
                   <input
                     type="datetime-local"
                     name="end_time"
-                    // defaultValue={new Date(selectedPro.end_time).toISOString().slice(0, 16)}
-                    defaultValue={formatDate(new Date(selectedPro.end_time))}
+                    defaultValue={new Date(selectedPro.end_time).toISOString().slice(0, 16)}
+                    // defaultValue={formatDate(new Date(selectedPro.end_time))}
                     className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
                     required
                     title="End Production"
@@ -884,91 +887,6 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data  , onAdd 
           </div>
         </div>
       )}
-      {/* Add Modal */}
-{/* {isAddModalOpen && (
-  <div className="fixed inset-0 flex items-center justify-center z-50">
-    <div className="modal-box p-6 bg-white shadow-lg rounded-lg w-full max-w-lg">
-      <h3 className="font-bold text-2xl text-purple_logo mb-6">Add New Machine</h3>
-      <form onSubmit={handleSaveAddPro}>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-text_black mb-1">Machine Name</label>
-            <input
-              type="text"
-              name="machine_name"
-              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
-              required
-              placeholder="Enter machine name"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-text_black mb-1">Machine Type</label>
-            <input
-              type="text"
-              name="machine_type"
-              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
-              required
-              placeholder="Enter machine type"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-text_black mb-1">Start Time</label>
-            <input
-              type="datetime-local"
-              name="start_time"
-              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-text_black mb-1">End Time</label>
-            <input
-              type="datetime-local"
-              name="end_time"
-              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-text_black mb-1">output_quantity Quantity</label>
-            <input
-              type="number"
-              name="output_quantity_quantity"
-              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
-              required
-              placeholder="Enter output_quantity quantity"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-text_black mb-1">Target Quantity</label>
-            <input
-              type="number"
-              name="target_quantity"
-              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
-              required
-              placeholder="Enter target quantity"
-            />
-          </div>
-          <div className="flex justify-end space-x-4 mt-4">
-            <button
-              type="submit"
-              className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
-            >
-              Add
-            </button>
-            <button
-              type="button"
-              className="bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-400 transition"
-              onClick={() => setIsAddModalOpen(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-)} */}
 
     </div>
   );
