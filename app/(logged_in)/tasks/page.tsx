@@ -32,7 +32,7 @@ export default function TaskPage({ }: DashboardProps) {
         const fetchTasks = async () => {
             try {
                 setIsLoading(true);
-                const response = await api.get('/api/task');
+                const response = await api.get('/api/tasks');
                 setTask(response.data.data); // Access the 'data' property of the response
                 setIsLoading(false);
             } catch (err) {
@@ -56,7 +56,7 @@ export default function TaskPage({ }: DashboardProps) {
         shift: null, // Define how to derive this
         output: null, // Define how to calculate this
         energy: null, // Define how to calculate this
-        assign: null, // Define how to derive this
+        assign: taskItem.user_full_name, // Convert user_id to string
         duedate: taskItem.due_date,
         type: 'N/A', // Define how to derive this if applicable
         status: taskItem.status,

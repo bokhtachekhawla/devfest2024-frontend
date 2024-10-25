@@ -57,7 +57,7 @@ export interface MachineData {
 
 export interface TaskData {
   id: number;
-  user_id: number;
+  user_full_name: string;
   task_description: string;
   due_date: string;
   status: string;

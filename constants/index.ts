@@ -155,9 +155,8 @@ export const tableHeaders = [
 
 export const tasktableHeaders = [
   { key: 'task', label: 'Task Description' },
-  { key: 'machine', label: 'Machine' },
-  { key: 'type', label: 'Type' },
   { key: 'assign', label: 'Assign to' },
+  { key: 'createdat', label: 'Creation Date' },
   { key: 'duedate', label: 'Due Date' },
   { key: 'status', label: 'Status' },
 ];
