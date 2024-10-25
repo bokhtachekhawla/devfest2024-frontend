@@ -16,6 +16,7 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // State for Delete Modal
   const [isAddModalOpen, setIsAddModalOpen] = useState(false); // State for Add Modal
+  const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     setFilteredData(initialData);
@@ -299,7 +300,7 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
       )}
       {/* Edit Modal */}
       {isEditModalOpen && selectedMachine && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
           <div className="modal-box p-6 bg-white shadow-lg rounded-lg w-full max-w-lg">
             <h3 className="font-bold text-2xl text-purple_logo mb-6">Edit Machine</h3>
             <form onSubmit={handleSave}>
@@ -329,7 +330,7 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
                 </div>
               </div>
               <div className="modal-action flex justify-end space-x-4 mt-6">
-                <button type="submit" className="bg-blue_logo text-white py-2 px-4 rounded-md hover:bg-purple_button transition">
+                <button type="submit" className="bg-purple_button text-white py-2 px-4 rounded-md  transition">
                   Save
                 </button>
                 <button
@@ -344,10 +345,10 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
           </div>
         </div>
       )}
-      {/* Add Modal */}
-      {isAddModalOpen && (
+ {/* Add Modal */}
+ {isAddModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg mx-4 md:mx-auto">
             <h3 className="text-lg font-bold mb-4">Add Machine</h3>
             <form onSubmit={handleSaveAddMachine}>
               <div className="mb-4">
@@ -356,7 +357,14 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
               </div>
               <div className="mb-4">
                 <label htmlFor="machine_type" className="block text-sm font-medium text-gray-700">Machine Type</label>
-                <input type="text" id="machine_type" name="machine_type" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
+                <select id="machine_type" name="machine_type" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                  <option value="Welding Robots">Welding Robots</option>
+                  <option value="Stamping Presses">Stamping Presses</option>
+                  <option value="Painting Robots">Painting Robots</option>
+                  <option value="AGV">AGV</option>
+                  <option value="CNC Milling Machines">CNC Milling Machines</option>
+                  <option value="Leak Test Machines">Leak Test Machines</option>
+                </select>
               </div>
               <div className="mb-4">
                 <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
@@ -368,14 +376,28 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
               </div>
               <div className="mb-4">
                 <label htmlFor="last_maintenance" className="block text-sm font-medium text-gray-700">Last Maintenance</label>
-                <input type="datetime-local" id="last_maintenance" name="last_maintenance" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
+                <input
+                  type="date"
+                  id="last_maintenance"
+                  name="last_maintenance"
+                  required
+                  max={today}
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                />
               </div>
               <div className="mb-4">
                 <label htmlFor="first_usage" className="block text-sm font-medium text-gray-700">First Usage</label>
-                <input type="datetime-local" id="first_usage" name="first_usage" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
+                <input
+                  type="date"
+                  id="first_usage"
+                  name="first_usage"
+                  required
+                  max={today}
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                />
               </div>
               <div className="flex justify-end space-x-2">
-                <button type="submit" className="bg-blue_logo text-white py-2 px-4 rounded-md">Add</button>
+                <button type="submit" className="bg-purple_button text-white py-2 px-4 rounded-md">Add</button>
                 <button type="button" className="bg-gray-300 text-black py-2 px-4 rounded-md" onClick={() => setIsAddModalOpen(false)}>Cancel</button>
               </div>
             </form>
