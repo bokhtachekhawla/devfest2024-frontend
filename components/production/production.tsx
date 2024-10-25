@@ -38,7 +38,7 @@
 // // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
 // // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Time</th>
 // // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Time</th>
-// // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Output</th>
+// // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">output_quantity</th>
 // // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Target</th>
 // // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
 // // //           </tr>
@@ -50,10 +50,10 @@
 // // //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.machine_type}</td>
 // // //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.start_time.toLocaleDateString()}</td>
 // // //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.end_time.toLocaleDateString()}</td>
-// // //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.output}</td>
+// // //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.output_quantity}</td>
 // // //               <td className="px-6 py-4 whitespace-nowrap text-sm">
-// // //                 <span className={getProgressColor(pro.output, pro.target)}>
-// // //                   {` ${pro.output}/${pro.target}`}
+// // //                 <span className={getProgressColor(pro.output_quantity, pro.target)}>
+// // //                   {` ${pro.output_quantity}/${pro.target}`}
 // // //                 </span>
 // // //               </td>
 
@@ -100,7 +100,7 @@
 // //   machine_type: string;
 // //   start_time: string;
 // //   end_time: string;
-// //   output_quantity: number;
+// //   output_quantity_quantity: number;
 // //   target_quantity: number;
 // // };
 
@@ -162,7 +162,7 @@
 // //   const handleFilterChange = (filters: { type: string; status: string }) => {
 // //     const newFilteredData = data.filter((production) => {
 // //       const typeMatch = !filters.type || production.machine_type === filters.type
-// //       const statusMatch = !filters.status || production.output_quantity === filters.output_quantity
+// //       const statusMatch = !filters.status || production.output_quantity_quantity === filters.output_quantity_quantity
 // //       return typeMatch && statusMatch
 // //     })
 // //     setFilteredData(newFilteredData)
@@ -252,7 +252,7 @@
 // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
 // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Time</th>
 // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Time</th>
-// //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Output</th>
+// //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">output_quantity</th>
 // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Target</th>
 // //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
 // //           </tr>
@@ -264,10 +264,10 @@
 // //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.machine_type}</td>
 // //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{new Date(pro.start_time).toLocaleDateString()}</td>
 // //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{new Date(pro.end_time).toLocaleDateString()}</td>
-// //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.output_quantity}</td>
+// //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.output_quantity_quantity}</td>
 // //               <td className="px-6 py-4 whitespace-nowrap text-sm">
-// //                 <span className={getProgressColor(pro.output_quantity, pro.target_quantity)}>
-// //                   {` ${pro.output_quantity}/${pro.target_quantity}`}
+// //                 <span className={getProgressColor(pro.output_quantity_quantity, pro.target_quantity)}>
+// //                   {` ${pro.output_quantity_quantity}/${pro.target_quantity}`}
 // //                 </span>
 // //               </td>
 // //               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
@@ -311,7 +311,7 @@
 //   machine_type: string;
 //   start_time: string;
 //   end_time: string;
-//   output_quantity: number;
+//   output_quantity_quantity: number;
 //   target_quantity: number;
 // };
 
@@ -451,7 +451,7 @@
 //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
 //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Time</th>
 //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Time</th>
-//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Output</th>
+//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">output_quantity</th>
 //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Target</th>
 //             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
 //           </tr>
@@ -467,10 +467,10 @@
 //               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
 //                 {new Date(pro.end_time).toLocaleDateString()}
 //               </td>
-//               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.output_quantity}</td>
+//               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.output_quantity_quantity}</td>
 //               <td className="px-6 py-4 whitespace-nowrap text-sm">
-//                 <span className={getProgressColor(pro.output_quantity, pro.target_quantity)}>
-//                   {` ${pro.output_quantity}/${pro.target_quantity}`}
+//                 <span className={getProgressColor(pro.output_quantity_quantity, pro.target_quantity)}>
+//                   {` ${pro.output_quantity_quantity}/${pro.target_quantity}`}
 //                 </span>
 //               </td>
 //               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
@@ -516,10 +516,10 @@ type Production_Type = {
   machine_id: number;
   machine_name: string;
   machine_type: string;
-  start_time: string;
-  end_time: string;
-  output_quantity: number;
-  target_quantity: number;
+  start_time: Date; 
+  end_time: Date;
+  output_quantity: string;
+  target_quantity: string;
 };
 
 interface MachineTableProps {
@@ -549,7 +549,7 @@ const formatDate = (date: string) => {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${formattedTime}`;
 };
 
-export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
+export const MachineTable: React.FC<MachineTableProps> = ({ data: data  , onAdd , onDelete , onEdit }) => {
   // const [filteredData, setFilteredData] = useState<ProductionType[]>(data);
   const [filteredData, setFilteredData] = useState<ProductionType[]>(data);
 
@@ -593,7 +593,12 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
     }
   };
 
-
+  const formatDate = (date: Date) => {
+    return date.toLocaleString('sv-SE').replace("T", " ");
+  };
+  
+  
+  
 
 
   const handleEdit = (production: ProductionType) => {
@@ -616,17 +621,39 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
       const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
       return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${formattedTime}`;
     };
-    const updatedPro = {
+
+
+
+    
+    // const updatedPro = {
+    //   machine_name: formData.get('machine_name') as string,
+    //   output_quantity_quantity:Number (formData.get('output_quantity_quantity')),
+    //   target_quantity: Number(formData.get('target_quantity')),
+    //   start_time: formatDate(formData.get('start_time') as string),
+    //   end_time: formatDate(formData.get('end_time') as string),
+    // };
+
+
+    const updatedPro: ProductionType = {
+      id: selectedPro.id, // Ensure you include the id
       machine_name: formData.get('machine_name') as string,
-      last_maintenance: formatDate(formData.get('last_maintenance') as string),
+      output_quantity: formData.get('output_quantity_quantity') as string,
+      target_quantity: formData.get('target_quantity') as string,
+      start_time: new Date(formatDate(formData.get('start_time') as string)), // Convert to Date
+      end_time: new Date(formatDate(formData.get('end_time') as string)), // Convert to Date
+      machine_type: selectedPro.machine_type, // Ensure to maintain other required properties
+      // output_quantity: selectedPro.output_quantity, // Or however you want to set this
+      // target: selectedPro.target // Or however you want to set this
     };
+    
 
     try {
       const response = await api.put(`/api/productions/${selectedPro.id}`, updatedPro);
       if (response.status === 200) {
-        const updatedData = filteredData.map(production =>
+        const updatedData: ProductionType[] = filteredData.map(production =>
           production.id === selectedPro.id ? { ...production, ...updatedPro } : production
         );
+        
         setFilteredData(updatedData);
         setIsEditModalOpen(false);
         setSelectedPro(null);
@@ -635,6 +662,10 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
       console.error('Error updating machine:', error);
     }
   };
+
+
+
+
   const handleAdd = () => {
     setIsAddModalOpen(true);
   };
@@ -657,7 +688,7 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
       machine_type: formData.get('machine_type') as string,
       start_time: formatDate(formData.get('start_time') as string),
       end_time: formatDate(formData.get('end_time') as string),
-      output_quantity: Number(formData.get('output_quantity')),
+      output_quantity_quantity: Number(formData.get('output_quantity_quantity')),
       target_quantity: Number(formData.get('target_quantity')),
     };  
 
@@ -675,16 +706,6 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
 
   return (
     <div className="overflow-x-auto">
-      <div className="flex flex-col md:flex-row md:w-full w-64 xs:w-full justify-end mb-4">
-        <button
-          type="button"
-          className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
-          aria-label="Add"
-          onClick={handleAdd}
-        >
-          <IoAddCircle className="mr-1 w-8 h-8" />
-        </button>
-      </div>
       <table className="min-w-full bg-white shadow-md rounded-lg">
         <thead className="bg-gray-50">
           <tr>
@@ -692,7 +713,7 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Time</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Time</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Output</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">output_quantity</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Target</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
           </tr>
@@ -708,11 +729,15 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                 {new Date(pro.end_time).toLocaleDateString()}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.output}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm">
-                <span className={getProgressColor(pro.output, pro.target)}>
-                  {` ${pro.output}/${pro.target}`}
-                </span>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-bold text-gray-600 text-center">{pro.output_quantity}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-bold">
+                {/* <span className={getProgressColor(pro.output_quantity, pro.target)}>
+                  {` ${pro.output_quantity}/${pro.target}`}
+                </span> */}
+                <span className={getProgressColor(Number(pro.output_quantity), Number(pro.target_quantity))}>
+    {`${pro.output_quantity}/${pro.target_quantity}`}
+</span>
+
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
                 <button
@@ -774,9 +799,9 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
       )}
       {/* Edit Modal */}
       {isEditModalOpen && selectedPro && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50  bg-slate-700 opacity-80">
           <div className="modal-box p-6 bg-white shadow-lg rounded-lg w-full max-w-lg">
-            <h3 className="font-bold text-2xl text-purple_logo mb-6">Edit Machine</h3>
+            <h3 className="font-bold text-2xl text-purple_logo mb-6">Edit Machine Production</h3>
             <form onSubmit={handleSave}>
               <div className="space-y-4">
                 <div>
@@ -795,25 +820,53 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
                   <input
                     type="datetime-local"
                     name="start_time"
-                    defaultValue={new Date(selectedPro.start_time).toISOString().slice(0, 16)}
+                    // defaultValue={new Date(selectedPro.start_time).toISOString().slice(0, 16)}
+                    // Usage
+  defaultValue={formatDate(new Date(selectedPro.start_time))}
                     className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
                     required
-                    title="Last Maintenance Date and Time"
-                    placeholder="Enter last maintenance date and time"
+                    title="Start Time"
+                    placeholder="Enter the strat  date and time"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text_black mb-1">Last Maintenance</label>
+                  <label className="block text-sm font-medium text-text_black mb-1">End Time</label>
                   <input
                     type="datetime-local"
                     name="end_time"
-                    defaultValue={new Date(selectedPro.end_time).toISOString().slice(0, 16)}
+                    // defaultValue={new Date(selectedPro.end_time).toISOString().slice(0, 16)}
+                    defaultValue={formatDate(new Date(selectedPro.end_time))}
                     className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
                     required
-                    title="Last Maintenance Date and Time"
-                    placeholder="Enter last maintenance date and time"
+                    title="End Production"
+                    placeholder="Enter the end date and time"
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-text_black mb-1">Output Quantity</label>
+                  <input
+                    type="text"
+                    name="output_quantity"
+                    defaultValue={ Number(selectedPro.output_quantity)}
+                    className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+                    required
+                    placeholder="Enter The output Quantity"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-text_black mb-1">Target Quantity</label>
+                  <input
+                    type="text"
+                    name="target_quantity"
+                    defaultValue={
+                      Number(selectedPro.target_quantity)
+                    }
+                    className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+                    required
+                    placeholder="Enter Target Quantity"
+                  />
+                </div>
+                
               </div>
               <div className="modal-action flex justify-end space-x-4 mt-6">
                 <button type="submit" className="bg-blue_logo text-white py-2 px-4 rounded-md hover:bg-purple_button transition">
@@ -831,6 +884,92 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data: data }) => {
           </div>
         </div>
       )}
+      {/* Add Modal */}
+{/* {isAddModalOpen && (
+  <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="modal-box p-6 bg-white shadow-lg rounded-lg w-full max-w-lg">
+      <h3 className="font-bold text-2xl text-purple_logo mb-6">Add New Machine</h3>
+      <form onSubmit={handleSaveAddPro}>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-text_black mb-1">Machine Name</label>
+            <input
+              type="text"
+              name="machine_name"
+              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+              required
+              placeholder="Enter machine name"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text_black mb-1">Machine Type</label>
+            <input
+              type="text"
+              name="machine_type"
+              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+              required
+              placeholder="Enter machine type"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text_black mb-1">Start Time</label>
+            <input
+              type="datetime-local"
+              name="start_time"
+              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text_black mb-1">End Time</label>
+            <input
+              type="datetime-local"
+              name="end_time"
+              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text_black mb-1">output_quantity Quantity</label>
+            <input
+              type="number"
+              name="output_quantity_quantity"
+              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+              required
+              placeholder="Enter output_quantity quantity"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text_black mb-1">Target Quantity</label>
+            <input
+              type="number"
+              name="target_quantity"
+              className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+              required
+              placeholder="Enter target quantity"
+            />
+          </div>
+          <div className="flex justify-end space-x-4 mt-4">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+            >
+              Add
+            </button>
+            <button
+              type="button"
+              className="bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-400 transition"
+              onClick={() => setIsAddModalOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+)} */}
+
     </div>
   );
 };

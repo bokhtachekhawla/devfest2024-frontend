@@ -72,11 +72,15 @@ type ProductionType = {
   machine_id: number;
   machine_name: string;
   machine_type: string;
-  start_time: string;
-  end_time: string;
-  output_quantity: number;
-  target_quantity: number;
+  start_time: Date;
+  end_time: Date;
+  output_quantity: string;
+  target_quantity: string;
 };
+
+interface MachineTableProps {
+  data: ProductionType[]; // This should match the imported type
+}
 
 export default function ProductionPage({ }: DashboardProps) {
   const [data, setData] = useState<ProductionType[]>([]);
