@@ -1,18 +1,20 @@
 "use client"
-
+// import Link from 'next/link';
 import React, { useState, useEffect } from 'react'
-import { MachineData, MachineTableProps, SensorReading } from '@/types/index'
+import { MachineData, MachineTableProps } from '@/types/index'
 import { FilterCard } from './FilterCard'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import Image from 'next/image'
 import api from "@/lib/axios"
+import MyComponent from '@/utils/fetchDataInterval'
+import Link from 'next/link'
 
 export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) => {
   const [filteredData, setFilteredData] = useState<MachineData[]>(initialData)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMachine, setSelectedMachine] = useState<MachineData | null>(null);
-  const [sensorData, setSensorData] = useState<SensorReading[]>([]);
-  const [isLoadingSensorData, setIsLoadingSensorData] = useState(false);
+  // const [sensorData, setSensorData] = useState<SensorReading[]>([]);
+  // const [isLoadingSensorData, setIsLoadingSensorData] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // State for Delete Modal
   const [isAddModalOpen, setIsAddModalOpen] = useState(false); // State for Add Modal
@@ -24,25 +26,26 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
   const toggleModal = async (machine: MachineData | null = null) => {
     setIsModalOpen(!isModalOpen);
     setSelectedMachine(machine);
-    if (machine) {
-      await fetchSensorData(machine.id);
-    } else {
-      setSensorData([]);
-    }
+    // if (machine) {
+    //   await fetchSensorData(machine.id);
+    // } 
+    // else {
+    //   setSensorData([]);
+    // }
   };
 
-  const fetchSensorData = async (machineId: number) => {
-    setIsLoadingSensorData(true);
-    try {
-      const response = await api.get(`/api/sensor-readings?machine_id=${machineId}`);
-      setSensorData(response.data.data);
-    } catch (error) {
-      console.error('Error fetching sensor data:', error);
-      setSensorData([]);
-    } finally {
-      setIsLoadingSensorData(false);
-    }
-  };
+  // const fetchSensorData = async (machineId: number) => {
+  //   // setIsLoadingSensorData(true);
+  //   try {
+  //     const response = await api.get(`/api/sensor-readings?machine_id=${machineId}`);
+  //     // setSensorData(response.data.data);
+  //   } catch (error) {
+  //     console.error('Error fetching sensor data:', error);
+  //     setSensorData([]);
+  //   } finally {
+  //     setIsLoadingSensorData(false);
+  //   }
+  // };
 
   const getStatusColor = (status: MachineData['status']) => {
     switch (status) {
@@ -96,17 +99,17 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
     setFilteredData(newFilteredData)
   }
 
-  const renderSensorData = (reading: SensorReading) => {
-    const sensorData = JSON.parse(reading.sensor_data);
-    return (
-      <div key={reading.id} className="mb-4 p-4 bg-gray-100 rounded-lg">
-        <p><strong>Reading Time:</strong> {new Date(reading.reading_time).toLocaleString()}</p>
-        {Object.entries(sensorData).map(([key, value]) => (
-          <p key={key}><strong>{key.replace(/_/g, ' ')}:</strong> {JSON.stringify(value)}</p>
-        ))}
-      </div>
-    );
-  };
+  // const renderSensorData = (reading: SensorReading) => {
+  //   const sensorData = JSON.parse(reading.sensor_data);
+  //   return (
+  //     <div key={reading.id} className="mb-4 p-4 bg-gray-100 rounded-lg">
+  //       <p><strong>Reading Time:</strong> {new Date(reading.reading_time).toLocaleString()}</p>
+  //       {Object.entries(sensorData).map(([key, value]) => (
+  //         <p key={key}><strong>{key.replace(/_/g, ' ')}:</strong> {JSON.stringify(value)}</p>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   const handleEdit = (machine: MachineData) => {
     setSelectedMachine(machine);
@@ -218,14 +221,14 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
                   {machine.status}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium items-center  justify-center" >
-                  <button
+                  <a
                     type="button"
                     className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
                     aria-label="Details"
-                    onClick={() => toggleModal(machine)}
+                    href={`/machine-monitoring/${machine.id}`}
                   >
                     <DetailsIcon />
-                  </button>
+                  </a>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
                   <button
@@ -251,7 +254,7 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
         </table>
       </div>
 
-      {isModalOpen && selectedMachine && (
+      {/* {isModalOpen && selectedMachine && (
         <div className="fixed inset-0 bg-gray-200 bg-opacity-80 min-h-screen flex items-center justify-center overflow-y-auto">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl m-4">
             <div className="flex justify-between items-center mb-4">
@@ -274,6 +277,63 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
           </div>
         </div>
       )}
+       */}
+
+{/* {isModalOpen && selectedMachine && (
+        <div className="fixed inset-0 bg-gray-200 bg-opacity-80 min-h-screen flex items-center justify-center overflow-y-auto">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl m-4">
+            <div className="flex justify-between items-center mb-4">
+              <button onClick={() => toggleModal()} className="text-gray-500">Back</button>
+              <h2 className="text-xl font-semibold text-purple_button">{selectedMachine.machine_name}</h2>
+              <button onClick={() => toggleModal()} className="text-gray-500">X</button>
+            </div>
+            <h3 className="text-lg font-semibold mb-2">Sensor Readings</h3>
+            <MyComponent machineId={selectedMachine.id} />
+          </div>
+        </div>
+      )} */}
+
+{isModalOpen && selectedMachine && (
+    <div className="fixed inset-0 bg-gray-200 bg-opacity-80 min-h-screen flex items-center justify-center overflow-y-auto">
+        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl m-4">
+            <div className="flex justify-between items-center mb-4">
+                <button onClick={() => toggleModal()} className="text-gray-500">Back</button>
+                
+                {/* Link to navigate to machine-monitoring page with the selected machine ID */}
+                <Link href={`/machine-monitoring/${selectedMachine.id}`}>
+                    <h2 className="text-xl font-semibold text-purple_button cursor-pointer">
+                        View {selectedMachine.machine_name} Details
+                    </h2>
+                </Link>
+
+                <button onClick={() => toggleModal()} className="text-gray-500">X</button>
+            </div>
+        </div>
+    </div>
+)}
+
+{/* 
+{isModalOpen && selectedMachine && (
+    <div className="fixed inset-0 bg-gray-200 bg-opacity-80 min-h-screen flex items-center justify-center overflow-y-auto">
+        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl m-4">
+            <div className="flex justify-between items-center mb-4">
+                <button onClick={() => toggleModal()} className="text-gray-500">Back</button>
+
+                <Link href={`/machine-monitoring/${selectedMachine.id}`}>
+                    <h2 className="text-xl font-semibold text-purple_button cursor-pointer">
+                        {selectedMachine.machine_name}
+                    </h2>
+                </Link>
+
+                <button onClick={() => toggleModal()} className="text-gray-500">X</button>
+            </div>
+            
+            <h3 className="text-lg font-semibold mb-2">Sensor Readings</h3>
+            <MyComponent machineId={selectedMachine.id} />
+        </div>
+    </div>
+)} */}
+
       {/* Delete Modal */}
       {isDeleteModalOpen && selectedMachine && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
