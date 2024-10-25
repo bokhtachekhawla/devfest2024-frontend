@@ -1,50 +1,39 @@
-import React, { useState } from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import { FilterState, FilterCardProps } from '@/types/index'
-import { machineTypes, statuses } from '@/constants/index'
+import React, { useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { FilterState, FilterCardProps } from '@/types/index';
+import { machineTypes, statuses } from '@/constants/index';
 
-export const FilterCard: React.FC<FilterCardProps> = ({ onFilterChange }) => {
+export const FilterCard: React.FC<FilterCardProps> = React.memo(({ onFilterChange }) => {
   const [filters, setFilters] = useState<FilterState>({
     type: '',
     status: ''
-  })
-  const [openFilter, setOpenFilter] = useState<'type' | 'status' | null>(null)
+  });
+  const [openFilter, setOpenFilter] = useState<'type' | 'status' | null>(null);
 
   const handleFilterChange = (key: keyof FilterState, value: string) => {
-    const newFilters = { ...filters, [key]: value === 'All Types' || value === 'All Statuses' ? '' : value }
-    setFilters(newFilters)
-    onFilterChange(newFilters)
-    setOpenFilter(null)
-  }
+    const newFilters = { ...filters, [key]: value === 'All Types' || value === 'All Statuses' ? '' : value };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
+    setOpenFilter(null);
+  };
 
   const toggleFilter = (filter: 'type' | 'status') => {
-    setOpenFilter(openFilter === filter ? null : filter)
-  }
+    setOpenFilter(prev => (prev === filter ? null : filter));
+  };
 
   const renderFilterOptions = (options: string[], filterKey: keyof FilterState) => (
-    <div 
-      className={`
-        mt-2 space-y-2 overflow-y-auto transition-all duration-300 ease-in-out
-        ${openFilter === filterKey ? 'max-h-60' : 'max-h-0'}
-      `}
-    >
-      {options.map((option) => (
+    <div className={`mt-2 space-y-2 overflow-y-auto transition-all duration-300 ease-in-out ${openFilter === filterKey ? 'max-h-60' : 'max-h-0'}`}>
+      {options.map(option => (
         <button
           key={option}
-          className={`
-            w-full text-left px-3 py-2 text-sm rounded-md transition-colors duration-200
-            ${filters[filterKey] === option 
-              ? 'bg-purple-100 text-purple-700' 
-              : 'hover:bg-gray-100'
-            }
-          `}
+          className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors duration-200 ${filters[filterKey] === option ? 'bg-purple-100 text-purple-700' : 'hover:bg-gray-100'}`}
           onClick={() => handleFilterChange(filterKey, option)}
         >
           {option}
         </button>
       ))}
     </div>
-  )
+  );
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4 w-48">
@@ -57,6 +46,7 @@ export const FilterCard: React.FC<FilterCardProps> = ({ onFilterChange }) => {
       <div className="space-y-4">
         <div>
           <button
+            type="button"
             onClick={() => toggleFilter('type')}
             className="flex justify-between items-center w-full px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
@@ -77,5 +67,5 @@ export const FilterCard: React.FC<FilterCardProps> = ({ onFilterChange }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+});

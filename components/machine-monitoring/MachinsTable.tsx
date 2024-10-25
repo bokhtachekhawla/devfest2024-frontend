@@ -89,13 +89,17 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
   };
 
   const handleFilterChange = (filters: { type: string; status: string }) => {
+    console.log('Filters applied:', filters); // Debugging
     const newFilteredData = initialData.filter((machine) => {
-      const typeMatch = !filters.type || machine.machine_type === filters.type
-      const statusMatch = !filters.status || machine.status === filters.status
-      return typeMatch && statusMatch
-    })
-    setFilteredData(newFilteredData)
+      const typeMatch = !filters.type || machine.machine_type === filters.type;
+      const statusMatch = !filters.status || machine.status === filters.status;
+      return typeMatch && statusMatch;
+    });
+  
+    console.log('Filtered Data:', newFilteredData); // Debugging
+    setFilteredData(newFilteredData);
   }
+  
 
   const renderSensorData = (reading: SensorReading) => {
     const sensorData = JSON.parse(reading.sensor_data);

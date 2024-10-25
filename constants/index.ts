@@ -84,12 +84,12 @@ export const todosData = [
 
 export 
 const machineTypes = [
-  'Welding Robots',
-  'Stamping Presses',
-  'Painting Robots',
-  'AGV',
-  'CNC Milling Machines',
-  'Leak Test Machines'
+  'Welding Robot',
+  'Stamping Presse',
+  'Painting Robot',
+  'Automated Guided Vehicle',
+  'CNC Milling Machine',
+  'Leak Test Machine'
 ]
 
 export const statuses = ['running', 'ideal', 'maintenance']
