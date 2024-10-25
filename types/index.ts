@@ -55,6 +55,15 @@ export interface MachineData {
   updated_at: string;
 }
 
+export interface TaskData {
+  id: number;
+  user_id: number;
+  task_description: string;
+  due_date: string;
+  status: string;
+  created_at:string;
+}
+
 export interface SensorReading {
   id: number;
   machine_id: number;
