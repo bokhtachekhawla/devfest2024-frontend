@@ -53,11 +53,7 @@ export default function Login() {
         <h1 className="text-5xl xl:text-5xl font-bold text-center mr-4 text-purple_button ">
            Log In
          </h1>
-         {/* <Image
-           src="/logo-new.png"
-           alt="project Logo"           width={90}
-           height={90}
-         />       */}
+
 
 
 <svg width="180" height="82" viewBox="0 0 230 82" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[140px]">

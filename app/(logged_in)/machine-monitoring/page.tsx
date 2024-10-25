@@ -31,6 +31,6 @@ export default function MachineMonitoringPage() {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <StatsTable data={machines} />
+        <StatsTable data={machines}/>
     );
 }
