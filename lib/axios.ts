@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const api = axios.create({
-  baseURL: process.env.BASE_URL, 
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL, 
   headers: {
     "Content-Type": "application/json",
     "ngrok-skip-browser-warning": "69420",

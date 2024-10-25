@@ -123,3 +123,12 @@ export interface ProfileSectionProps {
   email: string;
   role: string;
 }
+
+export interface SensorReading {
+  id: number;
+  machine_id: number;
+  machine_name: string;
+  machine_type: string;
+  sensor_data: string;
+  reading_time: string;
+}
