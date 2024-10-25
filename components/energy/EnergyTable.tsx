@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { EnergyData, EnergyTableProps } from '@/types/index';
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -9,6 +9,29 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedMachine, setSelectedMachine] = useState<EnergyData | null>(null);
+  const [energyChartData, setEnergyChartData] = useState<{ [key: number]: any[] }>({});
+
+  useEffect(() => {
+    const fetchEnergyData = async () => {
+      const energyData: { [key: number]: any[] } = {};
+      for (const machine of data) {
+        try {
+          const response = await api.get(`/api/energy-usage?machine_id=${machine.id}`);
+          const chartData = response.data.data.map((item: any) => ({
+            time: new Date(item.start_shift_time).toLocaleString(),
+            value: item.energy_consumed
+          }));
+          energyData[machine.id] = chartData;
+        } catch (error) {
+          console.error(`Error fetching energy data for machine ${machine.id}:`, error);
+          energyData[machine.id] = [];
+        }
+      }
+      setEnergyChartData(energyData);
+    };
+
+    fetchEnergyData();
+  }, [data]);
 
   const handleEdit = (machine: EnergyData) => {
     setSelectedMachine(machine);
@@ -25,19 +48,10 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
     if (!selectedMachine) return;
 
     const formData = new FormData(e.currentTarget);
-    const formatDate = (date: string) => {
-      const d = new Date(date);
-      const pad = (n: number) => (n < 10 ? '0' + n : n);
-      const hours = d.getHours();
-      const minutes = d.getMinutes();
-      const seconds = d.getSeconds();
-      const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${formattedTime}`;
-    };
     const updatedMachine = {
       energy_consumed: parseFloat(formData.get('energy_consumed') as string),
-      start_shift_time: formatDate(formData.get('start_shift_time') as string),
-      end_shift_time: formatDate(formData.get('end_shift_time') as string),
+      start_shift_time: formData.get('start_shift_time') as string,
+      end_shift_time: formData.get('end_shift_time') as string,
     };
 
     try {
@@ -79,6 +93,7 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Machine</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Machine Type</th>
+              <th className="px-6 py-3 w-64 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3">Energy Consumption Chart</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Energy Consumed</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Shift Time</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Shift Time</th>
@@ -93,6 +108,19 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {machine.machine_type}
+                </td>
+                <td className="px-3 py-4 m-auto">
+                  <div className="h-40 w-64 ">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={energyChartData[machine.id] || []}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="time" />
+                        <YAxis />
+                        <Tooltip />
+                        <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {machine.energy_consumed} kWatt
@@ -167,7 +195,7 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
                   </div>
                 </div>
                 <div className="modal-action flex justify-end space-x-4 mt-6">
-                  <button type="submit" className="bg-purple_button text-white py-2 px-4 rounded-md hover:bg-purple_button transition">
+                  <button type="submit" className="bg-blue_logo text-white py-2 px-4 rounded-md hover:bg-purple_button transition">
                     Save
                   </button>
                   <button
