@@ -7,16 +7,19 @@ import { FaEdit, FaTrash } from 'react-icons/fa'
 import Image from 'next/image'
 import api from "@/lib/axios"
 
-export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
-  const [filteredData, setFilteredData] = useState<MachineData[]>(data)
+export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) => {
+  const [filteredData, setFilteredData] = useState<MachineData[]>(initialData)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMachine, setSelectedMachine] = useState<MachineData | null>(null);
   const [sensorData, setSensorData] = useState<SensorReading[]>([]);
   const [isLoadingSensorData, setIsLoadingSensorData] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // State for Delete Modal
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // State for Add Modal
 
   useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
+    setFilteredData(initialData);
+  }, [initialData]);
 
   const toggleModal = async (machine: MachineData | null = null) => {
     setIsModalOpen(!isModalOpen);
@@ -63,8 +66,29 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
     />
   );
 
+  const handleDelete = (machine: MachineData) => {
+    setSelectedMachine(machine);
+    setIsDeleteModalOpen(true); // Open delete modal
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!selectedMachine) return;
+
+    try {
+      const response = await api.delete(`/api/machines/${selectedMachine.id}`);
+      if (response.status === 200) {
+        const updatedData = filteredData.filter(machine => machine.id !== selectedMachine.id);
+        setFilteredData(updatedData);
+        setIsDeleteModalOpen(false);
+        setSelectedMachine(null);
+      }
+    } catch (error) {
+      console.error('Error deleting machine:', error);
+    }
+  };
+
   const handleFilterChange = (filters: { type: string; status: string }) => {
-    const newFilteredData = data.filter((machine) => {
+    const newFilteredData = initialData.filter((machine) => {
       const typeMatch = !filters.type || machine.machine_type === filters.type
       const statusMatch = !filters.status || machine.status === filters.status
       return typeMatch && statusMatch
@@ -84,11 +108,88 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
     );
   };
 
+  const handleEdit = (machine: MachineData) => {
+    setSelectedMachine(machine);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!selectedMachine) return;
+
+    const formData = new FormData(e.currentTarget);
+    const formatDate = (date: string) => {
+      const d = new Date(date);
+      const pad = (n: number) => (n < 10 ? '0' + n : n);
+      const hours = d.getHours();
+      const minutes = d.getMinutes();
+      const seconds = d.getSeconds();
+      const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${formattedTime}`;
+    };
+    const updatedMachine = {
+      machine_name: formData.get('machine_name') as string,
+      last_maintenance: formatDate(formData.get('last_maintenance') as string),
+    };
+
+    try {
+      const response = await api.put(`/api/machines/${selectedMachine.id}`, updatedMachine);
+      if (response.status === 200) {
+        const updatedData = filteredData.map(machine =>
+          machine.id === selectedMachine.id ? { ...machine, ...updatedMachine } : machine
+        );
+        setFilteredData(updatedData);
+        setIsEditModalOpen(false);
+        setSelectedMachine(null);
+      }
+    } catch (error) {
+      console.error('Error updating machine:', error);
+    }
+  };
+  const handleAdd = () => {
+    setIsAddModalOpen(true);
+  };
+  const handleSaveAddMachine = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const formatDate = (date: string) => {
+      const d = new Date(date);
+      const pad = (n: number) => (n < 10 ? '0' + n : n);
+      const hours = d.getHours();
+      const minutes = d.getMinutes();
+      const seconds = d.getSeconds();
+      const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${formattedTime}`;
+    };
+    const newMachine = {
+      machine_name: formData.get('machine_name') as string,
+      machine_type: formData.get('machine_type') as string,
+      status: formData.get('status') as string,
+      last_maintenance: formatDate(formData.get('last_maintenance') as string),
+      first_usage: formatDate(formData.get('first_usage') as string),
+    };  
+
+    try {
+      const response = await api.post('/api/machines', newMachine);
+      if (response.status === 201) {
+        const updatedData = [...filteredData, response.data];
+        setFilteredData(updatedData);
+        setIsAddModalOpen(false);
+      }
+    } catch (error) {
+      console.error('Error adding machine:', error);
+    }
+  };
+
   return (
     <div className='flex h-full gap-2'>
       <div>
         <div className='flex flex-col space-y-4 mb-4'>
-          <button className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'>
+          <button 
+            className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'
+            onClick= {() => {handleAdd()}}
+          >
             Add Machine
           </button>        
         </div>
@@ -131,17 +232,17 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
                     type="button"
                     className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
                     aria-label="Edit"
-                    onClick={() => {}}
+                    onClick={() => handleEdit(machine)}
                   >
-                    <FaEdit className="mr-1" /> 
+                    <FaEdit className="mr-1" /> Edit
                   </button>
                   <button
                     type="button"
                     className="text-red-600 hover:text-red-900 flex items-center transition duration-150 ease-in-out"
                     aria-label="Delete"
-                    onClick={() => {}}
+                    onClick={() => handleDelete(machine)}
                   >
-                    <FaTrash className="mr-1" /> 
+                    <FaTrash className="mr-1" /> Delete
                   </button>
                 </td>
               </tr>
@@ -170,6 +271,114 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data }) => {
                 <p>No sensor data available</p>
               )}
             </div>
+          </div>
+        </div>
+      )}
+      {/* Delete Modal */}
+      {isDeleteModalOpen && selectedMachine && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md">
+            <h3 className="text-lg font-bold mb-4">Confirm Deletion</h3>
+            <p>Are you sure you want to delete <strong>{selectedMachine.machine_name}</strong>? This action cannot be undone.</p>
+            <div className="flex justify-end space-x-4 mt-4">
+              <button
+                className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition"
+                onClick={handleDeleteConfirm}
+              >
+                Delete
+              </button>
+              <button
+                className="bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-400 transition"
+                onClick={() => setIsDeleteModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Edit Modal */}
+      {isEditModalOpen && selectedMachine && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="modal-box p-6 bg-white shadow-lg rounded-lg w-full max-w-lg">
+            <h3 className="font-bold text-2xl text-purple_logo mb-6">Edit Machine</h3>
+            <form onSubmit={handleSave}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-text_black mb-1">Machine Name</label>
+                  <input
+                    type="text"
+                    name="machine_name"
+                    defaultValue={selectedMachine.machine_name}
+                    className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+                    required
+                    placeholder="Enter machine name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-text_black mb-1">Last Maintenance</label>
+                  <input
+                    type="datetime-local"
+                    name="last_maintenance"
+                    defaultValue={new Date(selectedMachine.last_maintenance).toISOString().slice(0, 16)}
+                    className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+                    required
+                    title="Last Maintenance Date and Time"
+                    placeholder="Enter last maintenance date and time"
+                  />
+                </div>
+              </div>
+              <div className="modal-action flex justify-end space-x-4 mt-6">
+                <button type="submit" className="bg-blue_logo text-white py-2 px-4 rounded-md hover:bg-purple_button transition">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition"
+                  onClick={() => setIsEditModalOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {/* Add Modal */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md">
+            <h3 className="text-lg font-bold mb-4">Add Machine</h3>
+            <form onSubmit={handleSaveAddMachine}>
+              <div className="mb-4">
+                <label htmlFor="machine_name" className="block text-sm font-medium text-gray-700">Machine Name</label>
+                <input type="text" id="machine_name" name="machine_name" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="machine_type" className="block text-sm font-medium text-gray-700">Machine Type</label>
+                <input type="text" id="machine_type" name="machine_type" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
+                <select id="status" name="status" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                  <option value="running">Running</option>
+                  <option value="idle">Idle</option>
+                  <option value="maintenance">Maintenance</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label htmlFor="last_maintenance" className="block text-sm font-medium text-gray-700">Last Maintenance</label>
+                <input type="datetime-local" id="last_maintenance" name="last_maintenance" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="first_usage" className="block text-sm font-medium text-gray-700">First Usage</label>
+                <input type="datetime-local" id="first_usage" name="first_usage" required className="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
+              </div>
+              <div className="flex justify-end space-x-2">
+                <button type="submit" className="bg-blue_logo text-white py-2 px-4 rounded-md">Add</button>
+                <button type="button" className="bg-gray-300 text-black py-2 px-4 rounded-md" onClick={() => setIsAddModalOpen(false)}>Cancel</button>
+              </div>
+            </form>
           </div>
         </div>
       )}
