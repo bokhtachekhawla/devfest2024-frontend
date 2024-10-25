@@ -120,13 +120,23 @@ export interface MetricsTableProps {
 }
 
 
+
+
+
 export interface EnergyData {
-  id: string
-  name: string
-  energyConsumption: { time: number; value: number }[]
-  lastEnergyUsage: number,
-  
+  id: number;
+  machine_name: string;
+  machine_type: string;
+  energy_consumed: number;
+  start_shift_time: string;
+  end_shift_time: string;
 }
+
+export interface EnergyTableProps {
+  data: EnergyData[];
+}
+
+
 
 export interface EnergyTableProps {
   data: EnergyData[]
