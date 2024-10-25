@@ -61,7 +61,7 @@
 
 "use client";
 
-import MachineTable from "@/components/production/production";
+import   {MachineTable} from "@/components/production/production";
 import api from "@/lib/axios";
 import { DashboardProps } from '@/types/index';
 import React, { useEffect, useState } from "react";
@@ -81,6 +81,8 @@ export default function ProductionPage({ }: DashboardProps) {
   const [data, setData] = useState<ProductionType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editFormData, setEditFormData] = useState<ProductionType | null>(null);
   const API_URL = "/api/productions";  // Full URL
 
   useEffect(() => {
@@ -91,7 +93,8 @@ export default function ProductionPage({ }: DashboardProps) {
           throw new Error("Failed to fetch data");
         }
 
-        setData(response.data);  // Assuming the API returns an array of ProductionType objects
+        setData(response.data.data);  // Assuming the API returns an array of ProductionType objects
+        
       } catch (err) {
         setError(err.message);
       } finally {
@@ -102,9 +105,72 @@ export default function ProductionPage({ }: DashboardProps) {
     fetchData();
   }, []);
 
+
+  const handleEdit = (id: number, updatedData: ProductionType) => {
+      setEditingId(id);
+      setEditFormData(updatedData);  // Pre-fill the form with existing data
+    };
+  
+    const handleEditSubmit = async () => {
+      if (!editFormData || !editingId) return;
+  
+      try {
+        const response = await api.put(`${API_URL}/${editingId}`, editFormData);
+        setData(data.map(d => d.id === editingId ? response.data.data : d));  // Update the state with new data
+        setEditingId(null);  // Clear edit mode
+      } catch (err) {
+        setError("Failed to update data");
+      }
+    };
+  
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (editFormData) {
+        setEditFormData({
+          ...editFormData,
+          [e.target.name]: e.target.value,
+        });
+      }
+    };
+  
+    const handleDelete = async (id: number) => {
+      try {
+        await api.delete(`${API_URL}/${id}`);
+        setData(data.filter(d => d.id !== id));  // Remove deleted item from the state
+      } catch (err) {
+        setError("Failed to delete data");
+      }
+    };
+  
+
   // Display loading or error state
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  return <MachineTable data={data} />;
+  return <>
+  <MachineTable data={data}  onEdit={handleEdit}
+  onDelete={handleDelete} />;
+  {editingId && editFormData && (
+        <div className="edit-form">
+          <h3>Edit Production Data</h3>
+          <form onSubmit={handleEditSubmit}>
+            <input
+              type="text"
+              name="machine_name"
+              value={editFormData.machine_name}
+              onChange={handleInputChange}
+            />
+            <input
+              type="number"
+              name="output_quantity"
+              value={editFormData.output_quantity}
+              onChange={handleInputChange}
+            />
+            {/* Add more fields as needed */}
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      )}
+  </>
+  
+
 }

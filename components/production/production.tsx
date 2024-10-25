@@ -101,8 +101,15 @@ type ProductionType = {
   target_quantity: number;
 };
 
+// interface MachineTableProps {
+//   data: ProductionType[];
+// }
+
 interface MachineTableProps {
   data: ProductionType[];
+  onAdd: (newData: ProductionType) => void;
+  onEdit: (id: number, updatedData: ProductionType) => void;
+  onDelete: (id: number) => void;
 }
 
 // Function to get color based on the progress percentage
@@ -113,7 +120,72 @@ const getProgressColor = (current: number, total: number) => {
   return "text-green-500"; // Green for good progress
 };
 
-export const MachineTable: React.FC<MachineTableProps> = ({ data }) => {
+// export const MachineTable: React.FC<MachineTableProps> = ({ data }) => {
+//   return (
+//     <div className="overflow-x-auto">
+//       <div className="flex flex-col md:flex-row md:w-full w-64 xs:w-full justify-end mb-4">
+//         <button
+//           type="button"
+//           className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
+//           aria-label="Add"
+//           onClick={() => {}}
+//         >
+//           <IoAddCircle className="mr-1 w-8 h-8" />
+//         </button>
+//       </div>
+//       <table className="min-w-full bg-white shadow-md rounded-lg">
+//         <thead className="bg-gray-50">
+//           <tr>
+//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Machine</th>
+//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Time</th>
+//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Time</th>
+//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Output</th>
+//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Target</th>
+//             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+//           </tr>
+//         </thead>
+//         <tbody className="bg-white divide-y divide-gray-200">
+//           {data.map((pro) => (
+//             <tr key={pro.id}>
+//               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{pro.machine_name}</td>
+//               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.machine_type}</td>
+//               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{new Date(pro.start_time).toLocaleDateString()}</td>
+//               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{new Date(pro.end_time).toLocaleDateString()}</td>
+//               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{pro.output_quantity}</td>
+//               <td className="px-6 py-4 whitespace-nowrap text-sm">
+//                 <span className={getProgressColor(pro.output_quantity, pro.target_quantity)}>
+//                   {` ${pro.output_quantity}/${pro.target_quantity}`}
+//                 </span>
+//               </td>
+//               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
+//                 <button
+//                   type="button"
+//                   className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
+//                   aria-label="Edit"
+//                   onClick={() => {}}
+//                 >
+//                   <FaEdit className="mr-1" />
+//                 </button>
+//                 <button
+//                   type="button"
+//                   className="text-red-600 hover:text-red-900 flex items-center transition duration-150 ease-in-out"
+//                   aria-label="Delete"
+//                   onClick={() => {}}
+//                 >
+//                   <FaTrash className="mr-1" />
+//                 </button>
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
+
+// export default MachineTable;
+export const MachineTable: React.FC<MachineTableProps> = ({ data, onEdit, onDelete }) => {
   return (
     <div className="overflow-x-auto">
       <div className="flex flex-col md:flex-row md:w-full w-64 xs:w-full justify-end mb-4">
@@ -156,7 +228,7 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data }) => {
                   type="button"
                   className="text-indigo-600 hover:text-indigo-900 flex items-center transition duration-150 ease-in-out"
                   aria-label="Edit"
-                  onClick={() => {}}
+                  onClick={() => onEdit(pro.id, pro)}  // Pass the current item for editing
                 >
                   <FaEdit className="mr-1" />
                 </button>
@@ -164,7 +236,7 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data }) => {
                   type="button"
                   className="text-red-600 hover:text-red-900 flex items-center transition duration-150 ease-in-out"
                   aria-label="Delete"
-                  onClick={() => {}}
+                  onClick={() => onDelete(pro.id)}
                 >
                   <FaTrash className="mr-1" />
                 </button>
@@ -176,5 +248,3 @@ export const MachineTable: React.FC<MachineTableProps> = ({ data }) => {
     </div>
   );
 };
-
-export default MachineTable;
