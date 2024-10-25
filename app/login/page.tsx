@@ -127,7 +127,7 @@ export default function Login() {
       localStorage.setItem("token", token);
 
       // Redirect to a different page after login
-      router.push("/Dashboard");
+      router.push("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
       setLoginError("Invalid email or password. Please try again.");
