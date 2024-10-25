@@ -44,14 +44,35 @@ export interface TodoListProps {
 }
 
 export interface MachineData {
-  id :number
-  name: string
-  type: string
-  Last_Maintenance : Date
-  details : any[]
-  status: 'running' | 'ideal' | 'maintenance'
+  id: number;
+  machine_name: string;
+  machine_type: string;
+  status: 'running' | 'idle' | 'maintenance';
+  last_maintenance: string;
+  first_usage: string;
+  created_at: string;
+  updated_at: string;
 }
 
+export interface TaskData {
+  id: number;
+  task_id :number;
+  user_id: number;
+  user_full_name: string;
+  task_description: string;
+  due_date: string;
+  status: 'todo'|'pending'|'completed';
+  created_at:string;
+}
+
+export interface SensorReading {
+  id: number;
+  machine_id: number;
+  machine_name: string;
+  machine_type: string;
+  sensor_data: string;
+  reading_time: string;
+}
 
 
 export interface MachineTableProps {
@@ -98,13 +119,23 @@ export interface MetricsTableProps {
 }
 
 
+
+
+
 export interface EnergyData {
-  id: string
-  name: string
-  energyConsumption: { time: number; value: number }[]
-  lastEnergyUsage: number,
-  
+  id: number;
+  machine_name: string;
+  machine_type: string;
+  energy_consumed: number;
+  start_shift_time: string;
+  end_shift_time: string;
 }
+
+export interface EnergyTableProps {
+  data: EnergyData[];
+}
+
+
 
 export interface EnergyTableProps {
   data: EnergyData[]
@@ -121,4 +152,13 @@ export interface ProfileSectionProps {
   gender: string;
   email: string;
   role: string;
+}
+
+export interface SensorReading {
+  id: number;
+  machine_id: number;
+  machine_name: string;
+  machine_type: string;
+  sensor_data: string;
+  reading_time: string;
 }

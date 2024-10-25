@@ -1,4 +1,3 @@
-// import Image from "next/image";
 import Link from "next/link";
 export default function Home() {
   return (
@@ -24,13 +23,8 @@ export default function Home() {
         </div>
 
         <div className="py-2 mx-5 ">
-          <p className="text-text_black font-semibold  lg:text-xl text-base xl:text-justify xl:max-w-[40vw] text-center leading-relaxed px-6 p-6">
-            Car manufacturing relies on a smooth, fast-paced process 
-            where machines and workers must work in perfect harmony.
-            Every step—like stamping metal sheets into car doors or 
-            welding frames together—needs to be precise to meet the high 
-            demand for vehicles. To stay competitive, the factory must 
-            focus on efficiency and coordination
+          <p className="text-text_black font-semibold  lg:text-xl text-sans xl:text-justify xl:max-w-[70vw] text-center leading-relaxed px-6 p-6 items-center">
+          It provides real-time data on machine performance and production processes, ensuring efficiency and precision at every stage. By enhancing coordination between machines and workers, GearLink helps manufacturers stay updated in real time in the fast-paced automotive industry.
           </p>
           <div className="flex justify-center mt-6 py-4">
             <Link href="/login">
@@ -42,10 +36,11 @@ export default function Home() {
           </div>
         </div>
       </div>
-        
       </main>
     {/* <Footer /> */}
     </>
     
   );
 }
+
+

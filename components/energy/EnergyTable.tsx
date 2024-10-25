@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { EnergyData, EnergyTableProps } from '@/types/index';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import api from "@/lib/axios";
 
 const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
-  const [data, setData] = useState(initialData); // Store data in a state
+  const [data, setData] = useState(initialData);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedMachine, setSelectedMachine] = useState<EnergyData | null>(null);
@@ -19,21 +20,54 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
     setDeleteModalOpen(true);
   };
 
-  const handleSave = (newData: EnergyData) => {
-    const updatedData = data.map(machine =>
-      machine.id === newData.id ? newData : machine
-    );
-    setData(updatedData);
-    setEditModalOpen(false);
-    setSelectedMachine(null);
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!selectedMachine) return;
+
+    const formData = new FormData(e.currentTarget);
+    const formatDate = (date: string) => {
+      const d = new Date(date);
+      const pad = (n: number) => (n < 10 ? '0' + n : n);
+      const hours = d.getHours();
+      const minutes = d.getMinutes();
+      const seconds = d.getSeconds();
+      const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${formattedTime}`;
+    };
+    const updatedMachine = {
+      energy_consumed: parseFloat(formData.get('energy_consumed') as string),
+      start_shift_time: formatDate(formData.get('start_shift_time') as string),
+      end_shift_time: formatDate(formData.get('end_shift_time') as string),
+    };
+
+    try {
+      const response = await api.put(`/api/energy-usage/${selectedMachine.id}`, updatedMachine);
+      if (response.status === 200) {
+        const updatedData = data.map(machine =>
+          machine.id === selectedMachine.id ? { ...machine, ...updatedMachine } : machine
+        );
+        setData(updatedData);
+        setEditModalOpen(false);
+        setSelectedMachine(null);
+      }
+    } catch (error) {
+      console.error('Error updating energy usage:', error);
+    }
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (selectedMachine) {
-      const updatedData = data.filter(machine => machine.id !== selectedMachine.id);
-      setData(updatedData);
-      setDeleteModalOpen(false);
-      setSelectedMachine(null);
+      try {
+        const response = await api.delete(`/api/energy-usage/${selectedMachine.id}`);
+        if (response.status === 200) {
+          const updatedData = data.filter(machine => machine.id !== selectedMachine.id);
+          setData(updatedData);
+          setDeleteModalOpen(false);
+          setSelectedMachine(null);
+        }
+      } catch (error) {
+        console.error('Error deleting energy usage:', error);
+      }
     }
   };
 
@@ -44,8 +78,10 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Machine</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Energy Consumption chart</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Energy Usage</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Machine Type</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Energy Consumed</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Shift Time</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Shift Time</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -53,23 +89,19 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
             {data.map((machine, index) => (
               <tr key={machine.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {machine.name}
-                </td>
-                <td className="px-6 py-4">
-                  <div className="h-24 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={machine.energyConsumption}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="time" hide />
-                        <YAxis hide />
-                        <Tooltip />
-                        <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </div>
+                  {machine.machine_name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {machine.lastEnergyUsage} kWatt
+                  {machine.machine_type}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {machine.energy_consumed} kWatt
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {new Date(machine.start_shift_time).toLocaleString()}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {new Date(machine.end_shift_time).toLocaleString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
                   <button
@@ -95,50 +127,47 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
         </table>
 
         {/* Edit Modal */}
-        {isEditModalOpen && (
+        {isEditModalOpen && selectedMachine && (
           <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="modal-box p-6 bg-white shadow-lg rounded-lg w-full max-w-lg">
-              <h3 className="font-bold text-2xl text-purple_logo mb-6">Edit Machine</h3>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.target as HTMLFormElement);
-                  const updatedMachine: EnergyData = {
-                    id: selectedMachine?.id || '',
-                    name: formData.get('name') as string,
-                    lastEnergyUsage: parseFloat(formData.get('lastEnergyUsage') as string),
-                    energyConsumption: selectedMachine?.energyConsumption || [],
-                  };
-                  handleSave(updatedMachine);
-                }}
-              >
+              <h3 className="font-bold text-2xl text-purple_logo mb-6">Edit Energy Usage</h3>
+              <form onSubmit={handleSave}>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-text_black mb-1">Machine Name</label>
+                    <label className="block text-sm font-medium text-text_black mb-1">Energy Consumed (kWatt)</label>
                     <input
-                      type="text"
-                      name="name"
-                      defaultValue={selectedMachine?.name}
+                      type="number"
+                      name="energy_consumed"
+                      defaultValue={selectedMachine.energy_consumed}
                       className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
                       required
-                      placeholder="Enter machine name"
+                      step="0.01"
+                      placeholder="Enter energy consumed"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-text_black mb-1">Last Energy Usage (kWatt)</label>
+                    <label className="block text-sm font-medium text-text_black mb-1">Start Shift Time</label>
                     <input
-                      type="number"
-                      name="lastEnergyUsage"
-                      defaultValue={selectedMachine?.lastEnergyUsage}
+                      type="datetime-local"
+                      name="start_shift_time"
+                      defaultValue={new Date(selectedMachine.start_shift_time).toISOString().slice(0, 16)}
                       className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
                       required
-                      title="Last Energy Usage"
-                      placeholder="Enter last energy usage"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-text_black mb-1">End Shift Time</label>
+                    <input
+                      type="datetime-local"
+                      name="end_shift_time"
+                      defaultValue={new Date(selectedMachine.end_shift_time).toISOString().slice(0, 16)}
+                      className="block w-full border border-text_inputs_grey rounded-md shadow-sm focus:ring-purple_button focus:border-purple_button text-sm p-2"
+                      required
                     />
                   </div>
                 </div>
                 <div className="modal-action flex justify-end space-x-4 mt-6">
-                  <button type="submit" className="bg-blue_logo text-white py-2 px-4 rounded-md hover:bg-purple_button transition">
+                  <button type="submit" className="bg-purple_button text-white py-2 px-4 rounded-md hover:bg-purple_button transition">
                     Save
                   </button>
                   <button
@@ -158,8 +187,8 @@ const EnergyTable: React.FC<EnergyTableProps> = ({ data: initialData }) => {
         {isDeleteModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="modal-box p-6 bg-white shadow-lg rounded-lg w-full max-w-md">
-              <h3 className="font-bold text-2xl text-red-600 mb-4">Delete Machine</h3>
-              <p className="py-4 text-text_black">Are you sure you want to delete this machine?</p>
+              <h3 className="font-bold text-2xl text-red-600 mb-4">Delete Energy Usage</h3>
+              <p className="py-4 text-text_black">Are you sure you want to delete this energy usage record?</p>
               <div className="flex justify-end space-x-4 mt-6">
                 <button
                   type="button"
