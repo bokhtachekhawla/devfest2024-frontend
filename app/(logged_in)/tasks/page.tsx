@@ -21,6 +21,8 @@ interface TransformedTask {
     report: string | null; // Define how to derive this from your data
     date: string | null; // Determine how to calculate this
     delete: null; // Update based on your requirements for delete functionality
+    user_id: number ;
+    task_id: number;
 }
 
 export default function TaskPage({ }: DashboardProps) {
@@ -61,8 +63,10 @@ export default function TaskPage({ }: DashboardProps) {
         type: 'N/A', // Define how to derive this if applicable
         status: taskItem.status,
         report: null, // Define how to derive this if applicable
-        date: taskItem.created_at,
+        date: new Date(taskItem.created_at).toLocaleDateString(), // Format the date
         delete: null, // Define your delete functionality here
+        user_id : taskItem.user_id ,
+        task_id:taskItem.id
     }));
 
     return (
