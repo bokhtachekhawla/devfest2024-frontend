@@ -1,174 +1,146 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
-import React, { useState } from 'react'
+
+import React, { useState, useEffect } from 'react'
+import axios from '@/lib/axios'
 import { StatCard } from '../common-components/StatCard'
 import { ChartCard } from '../common-components/ChartComponent'
 import { PieChart } from '../common-components/PieChart'
 import { BarChartComponent } from '../common-components/BarChartComponent'
 import { TodoList } from '@/components/tasks/TodoList'
-import { STAT_CARDS, CHART_CARDS,energyUsageData ,todosData} from '@/constants/index'
-
-// import ProductionData from "@/components/production/production"
+import { STAT_CARDS, CHART_CARDS } from '@/constants/index'
+import { ChartBar, CheckCircle } from 'lucide-react'
 
 export default function DashboardClient() {
-  // user on params
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [activeTab, setActiveTab] = useState('Dashboard') // Control active tab
+  const [productionData, setProductionData] = useState([])
+  const [energyUsageData, setEnergyUsageData] = useState([])
+  const [taskData, setTaskData] = useState([])
+  const [averageProductionRate, setAverageProductionRate] = useState(0)
+  const [completedTasksCount, setCompletedTasksCount] = useState(0)
+  const [userTasks, setUserTasks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  // const renderContent = () => {
-  //   switch (activeTab) {
-  //     case 'Dashboard':
-  //       return (
-  //         <div>
-  //           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
-  //             {STAT_CARDS.map((card, index) => (
-  //               <StatCard key={index} {...card} />
-  //             ))}
-  //           </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productionResponse, energyUsageResponse, taskResponse] = await Promise.all([
+          axios.get('/api/productions?per_page=20'),
+          axios.get('/api/energy-usage'),
+          axios.get('/api/tasks')
+        ])
 
-  //           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
-  //           {CHART_CARDS.map((card, index) => {
-  //           // If the title is "Production Output", render the BarChart instead of ChartCard
-  //           if (card.title === 'Production Output') {
-  //             return (
-  //               <BarChartComponent
-  //                 title={card.title}
-  //                 key={index}
-  //                 data={card.data}
-  //                 dataKey={card.dataKey}
-  //                 color={card.color}
-  //               />
-  //             );
-  //           }
+        const productionData = productionResponse.data.data.map((item: { output_quantity: number; target_quantity: number }) => ({
+          ...item,
+          productionRate: (item.output_quantity / item.target_quantity) * 100
+        }))
 
-  //           // Otherwise, render the default ChartCard
-  //           return <ChartCard key={index} {...card} />;
-  //         })}
-  //           </div>
-  //           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
-  //           <PieChart
-  //             title="Energy Usage by Machines"
-  //             data={energyUsageData}
-  //             dataKey="value"
-  //           />
-  //           <TodoList todos={todosData} />
-  //           </div>
-  //         </div>
-  //       )
-  //     case 'Machine Monitoring':
-  //       return <div><StatsTable data={machineData}/></div>
-  //     case 'Production Metrics':
-  //       return <div><MachineTable data={ProductionData}/></div>
-  //     case 'Defect Logging':
-  //       return <div><StatsTableDefect data = {defectData}/></div>
-  //     case 'Tasks':
-  //       return <div><Tables headers={tasktableHeaders} body={taskTableBody} /></div>
-  //       case 'Alerts':
-  //         return (
-  //           <div>
-  //             <Tables headers={AlertstableHeaders} body={alertsTableBody} />
-  //           </div>
-  //         );
-        
-  //       case 'Energy Usage':
-  //         return (
-  //           <div>
-  //             <div className="flex justify-center mb-4">
-  //               <button className="w-full max-w-xs bg-[#8400FF] text-white py-2 rounded-lg hover:bg-[#7a00cc] transition duration-200">Add Energy Usage</button>
-  //             </div>
-  //             <EnergyTable data={energyData} />
-  //           </div>
-  //         );
-        
-  //       return <div>
-  //         {/* <Tables headers={tasktableHeaders} body={tasktablebody} /> */}
-  //         <TaskTable headers={tasktableHeaders} body={taskTableBody} />
-  //         </div>
-  //     case 'Alerts':
-  //       return <div><Tables headers={AlertstableHeaders} body={alertsTableBody} /></div>
-  //     case 'Energy Usage':
-  //       return <div><EnergyTable data={[]} /></div>
-  //     case 'Settings':
-  //       return <SettingsContent />
-  //     default:
-  //       return <div>Select a tab to view content</div>
-  //   }
-  // }
-        return (
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
-              {STAT_CARDS.map((card, index) => (
-                <StatCard key={index} {...card} />
-              ))}
-            </div>
+        const totalTargetQuantity = productionData.reduce((sum: number, item: { target_quantity: number }) => sum + item.target_quantity, 0)
+        const totalOutputQuantity = productionData.reduce((sum: number, item: { output_quantity: number }) => sum + item.output_quantity, 0)
+        const avgProductionRate = (totalOutputQuantity / totalTargetQuantity) * 100
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
-            {CHART_CARDS.map((card, index) => {
-            // If the title is "Production Output", render the BarChart instead of ChartCard
-            if (card.title === 'Production Output') {
-              return (
-                <BarChartComponent
-                  title={card.title}
-                  key={index}
-                  data={card.data}
-                  dataKey={card.dataKey}
-                  color={card.color}
-                />
-              );
-            }
+        const energyUsageData = energyUsageResponse.data.data.map((item: { machine_name: string; energy_consumed: number }) => ({
+          name: item.machine_name,
+          value: item.energy_consumed
+        }))
 
-            // Otherwise, render the default ChartCard
-            return <ChartCard key={index} {...card} />;
-          })}
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
-            <PieChart
-              title="Energy Usage by Machines"
-              data={energyUsageData}
-              dataKey="value"
-            />
-            <TodoList todos={todosData} />
-            </div>
-          </div>
-        )
-  // return (
-  //   <div className="flex h-screen bg-gray-100 font-sans w-full">
-  //   <div className="flex h-screen bg-gray-100 font-sans w-full">
-  //     <Sidebar
-  //       isOpen={sidebarOpen}
-  //       toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-  //       setActiveTab={setActiveTab} // Pass function to handle active tab
-  //     />
-  //     <main className="flex-1 overflow-y-auto bg-gray-100"> {/* Handles scrolling here */}
-  //     <div className="flex justify-between items-center w-full bg-white p-7">
-  //           <h2 className="text-3xl font-semibold text-gray-800">{activeTab}</h2>
-  //           <div className="flex items-center">
-  //             <div className="relative">
-  //               <input type="text" placeholder="Search" className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal" />
-  //               <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-  //                 <Search className="h-4 w-4 text-gray-500" />
-  //               </div>
-  //             </div>
-  //             <button type="button" title="Notifications" className="ml-4 bg-white p-2 rounded-full shadow">
-  //               <Bell className="h-6 w-6 text-gray-500" />
-  //             </button>
-  //             <button type='button' title='profile' className="ml-4 flex items-center bg-white p-1 rounded-full shadow">
-  //               <Image 
-  //               src="/blank-profile-picture.png" 
-  //                height={32}
-  //                width={32} 
-  //                alt="User" 
-  //                className="h-8 w-8 rounded-full"
-  //                />
-  //               {/* <ChevronDown className="h-4 w-4 ml-2 text-gray-500" /> */}
-  //             </button>
-  //           </div>
-  //         </div>
-  //       <div className="container mx-auto px-6 py-4 ">
-  //         {renderContent()}
-  //       </div>
-  //     </main>
-  //   </div>
-  //   </div>
-  // )
+        const taskData = taskResponse.data.data
+        interface Task {
+          status: string;
+          user_id: string;
+          task_description: string;
+        }
+
+        const completedTasks = taskData.filter((task: Task) => task.status === 'completed')
+        const userId = localStorage.getItem('user') // Assuming user ID is stored in localStorage
+        const userTasks = taskData
+          .filter((task: Task) => task.user_id === userId)
+          .slice(0, 5)
+          .map((task: Task) => task.task_description)
+
+        setProductionData(productionData)
+        setEnergyUsageData(energyUsageData)
+        setTaskData(taskData)
+        setAverageProductionRate(avgProductionRate)
+        setCompletedTasksCount(completedTasks.length)
+        setUserTasks(userTasks)
+        setLoading(false)
+      } catch (err) {
+        setError(err.message)
+        setLoading(false)
+      }
+    }
+    
+
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center">Error: {error}</div>
+  }
+
+  const updatedStatCards = [
+    ...STAT_CARDS,
+    {
+      title: 'Average Production Rate',
+      value: averageProductionRate.toFixed(2) + '%',
+      icon: ChartBar,
+      color: 'bg-blue-500',
+    },
+    {
+      title: 'Completed Tasks',
+      value: completedTasksCount.toString(),
+      icon: CheckCircle,
+      color: 'bg-green-500',
+    }
+  ]
+
+  const updatedChartCards = CHART_CARDS.map(card => {
+    if (card.title === 'Production Output') {
+      return {
+        ...card,
+        data: productionData
+      }
+    }
+    return card
+  })
+
+  return (
+    <div className="p-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+        {updatedStatCards.map((card, index) => (
+          <StatCard key={index} {...card} />
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+        {updatedChartCards.map((card, index) => {
+          if (card.title === 'Production Output') {
+            return (
+              <BarChartComponent
+                key={index}
+                title={card.title}
+                data={card.data}
+                dataKey="productionRate"
+                color={card.color}
+              />
+            )
+          }
+          return <ChartCard key={index} {...card} />
+        })}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+        <PieChart
+          title="Energy Usage by Machines"
+          data={energyUsageData}
+          dataKey="value"
+        />
+        <TodoList todos={userTasks} />
+      </div>
+    </div>
+  )
 }

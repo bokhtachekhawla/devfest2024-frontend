@@ -19,12 +19,15 @@ export interface StatCardProps {
   color: string
 }
 
-export interface ChartCardProps {
-  title: string
-  data: Array<{ name: string; value: number }>
-  dataKey: string
-  color: string
-  chartType: 'line' | 'bar'
+interface ChartCardProps {
+  title: string;
+  data: Array<{
+    name: string;
+    value: number;
+    status: number;
+  }>;
+  dataKey: string;
+  color: string;
 }
 
 export interface SidebarItem {
@@ -123,7 +126,7 @@ export interface MetricsTableProps {
 
 
 export interface EnergyData {
-  id: number;
+  id: string;
   machine_name: string;
   machine_type: string;
   energy_consumed: number;

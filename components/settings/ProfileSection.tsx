@@ -4,12 +4,13 @@ import { FaPlus } from 'react-icons/fa';
 import api from "@/lib/axios";
 
 interface User {
-  id: number;
-  full_name: string;
-  email: string;
-  gender: string;
-  created_at: string;
-  updated_at: string;
+    id: number;
+    full_name: string;
+    email: string;
+    gender: string;
+    role: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export const ProfileSection: React.FC = () => {
@@ -27,6 +28,7 @@ export const ProfileSection: React.FC = () => {
         fullName: '',
         gender: '',
         email: '',
+        role: '', // Add role property here
     });
 
     const [newEmployer, setNewEmployer] = useState({
@@ -34,7 +36,7 @@ export const ProfileSection: React.FC = () => {
         gender: '',
         email: '',
         password: '',
-        role: 'manager',
+        role: 'operator' , // Add role property here
     });
 
     useEffect(() => {
@@ -51,9 +53,10 @@ export const ProfileSection: React.FC = () => {
                 const userData = response.data.data;
                 setUser(userData);
                 setFormData({
-                    fullName: userData.full_name,
+                    fullName: userData.name,
                     gender: userData.gender,
                     email: userData.email,
+                    role: userData.role,
                 });
                 setIsLoading(false);
             } catch (err) {
@@ -76,10 +79,10 @@ export const ProfileSection: React.FC = () => {
 
     const handleNewEmployerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setNewEmployer({
-            ...newEmployer,
+        setNewEmployer((prev) => ({
+            ...prev,
             [name]: value,
-        });
+        }));
     };
 
     const handleAddEmployer = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,7 +97,7 @@ export const ProfileSection: React.FC = () => {
                 gender: '',
                 email: '',
                 password: '',
-                role: 'manager',
+                role: '',
             });
             // Close the add form
             setShowAddForm(false);
@@ -388,7 +391,7 @@ export const ProfileSection: React.FC = () => {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-semibold">Email</label>
-                                
+
                                     <input
                                         type="email"
                                         name="email"
@@ -428,6 +431,8 @@ export const ProfileSection: React.FC = () => {
                                     </div>
                                 </div>
                                 <div>
+                                {user?.role === 'admin' ? (
+                                    <>
                                     <label htmlFor="role" className="block text-sm font-semibold">Role</label>
                                     <select
                                         id="role"
@@ -437,9 +442,15 @@ export const ProfileSection: React.FC = () => {
                                         onChange={handleNewEmployerChange}
                                         required
                                     >
+                                        <option value="">Select role</option>
                                         <option value="manager">Manager</option>
                                         <option value="operator">Operator</option>
                                     </select>
+                                    </>
+                                ) : (
+                                        <>
+                                        </>
+                                )}
                                 </div>
                                 <button className="bg-purple_button text-white px-4 py-2 rounded-md" type="submit">
                                     Add Employer

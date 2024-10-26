@@ -9,11 +9,14 @@ import {
   Battery, 
   // Bell, 
   Settings,
-  DeleteIcon
+  DeleteIcon,
+  GitGraph
 } from 'lucide-react'
 
+
 export const SIDEBAR_ITEMS: SidebarItem[] = [
-  { name: 'Dashboard', icon: LayoutDashboard  },
+  { name: 'Dashboard', icon: LayoutDashboard },
+  { name: 'KPI Data Points', icon: GitGraph },
   { name: 'Machine Monitoring', icon: Activity },
   { name: 'Production Metrics', icon: BarChart2 },
   { name: 'Defect Logging', icon: AlertTriangle },
@@ -25,8 +28,6 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 
 export const STAT_CARDS: StatCardProps[] = [
   { title: 'Machine Alerts', value: '15', icon: AlertTriangle, color: 'red' },
-  { title: 'Tasks Completed', value: '32', icon: ClipboardList, color: 'green' },
-  { title: 'Production Rate', value: '98%', icon: BarChart2, color: 'blue' },
   { title: 'Energy Efficiency', value: '87%', icon: Battery, color: 'yellow' },
 ]
 
