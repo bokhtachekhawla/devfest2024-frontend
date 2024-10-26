@@ -22,7 +22,7 @@ export const SettingsMenu: React.FC = () => {
       console.error("Logout failed:", error);
     }
   };
-
+  
   const handleChangePassword = async () => {
     try {
       await api.post('/api/auth/change-password', {
