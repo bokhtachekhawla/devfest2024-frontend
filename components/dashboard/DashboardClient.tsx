@@ -51,7 +51,7 @@ export default function DashboardClient() {
         }
 
         const completedTasks = taskData.filter((task: Task) => task.status === 'completed')
-        const userId = localStorage.getItem('userId') // Assuming user ID is stored in localStorage
+        const userId = localStorage.getItem('user') // Assuming user ID is stored in localStorage
         const userTasks = taskData
           .filter((task: Task) => task.user_id === userId)
           .slice(0, 5)

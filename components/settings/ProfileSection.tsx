@@ -8,6 +8,7 @@ interface User {
   full_name: string;
   email: string;
   gender: string;
+  role:string;
   created_at: string;
   updated_at: string;
 }
@@ -27,6 +28,7 @@ export const ProfileSection: React.FC = () => {
         fullName: '',
         gender: '',
         email: '',
+        role: '', // Add role property here
     });
 
     const [newEmployer, setNewEmployer] = useState({
@@ -34,7 +36,7 @@ export const ProfileSection: React.FC = () => {
         gender: '',
         email: '',
         password: '',
-        role: 'manager',
+        role: '',
     });
 
     useEffect(() => {
@@ -54,6 +56,7 @@ export const ProfileSection: React.FC = () => {
                     fullName: userData.full_name,
                     gender: userData.gender,
                     email: userData.email,
+                    role: userData.role,
                 });
                 setIsLoading(false);
             } catch (err) {
@@ -94,7 +97,7 @@ export const ProfileSection: React.FC = () => {
                 gender: '',
                 email: '',
                 password: '',
-                role: 'manager',
+                role: '',
             });
             // Close the add form
             setShowAddForm(false);
@@ -437,7 +440,7 @@ export const ProfileSection: React.FC = () => {
                                         onChange={handleNewEmployerChange}
                                         required
                                     >
-                                        <option value="manager">Manager</option>
+                                        {user?.role !== 'manager' && <option value="manager">Manager</option>}
                                         <option value="operator">Operator</option>
                                     </select>
                                 </div>
