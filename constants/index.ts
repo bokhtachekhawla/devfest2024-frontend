@@ -1,4 +1,4 @@
-import { SidebarItem, StatCardProps, ChartCardProps, MachineData ,EnergyData , TableBody  } from '@/types'
+import { SidebarItem, StatCardProps, ChartCardProps ,EnergyData , TableBody  } from '@/types'
 // import {defectData} from "@/data/defectData"
 import { 
   LayoutDashboard, 

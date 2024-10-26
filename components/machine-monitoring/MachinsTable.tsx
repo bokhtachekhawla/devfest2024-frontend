@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 // import Link from 'next/link';
 import React, { useState, useEffect } from 'react'
@@ -6,7 +7,7 @@ import { FilterCard } from './FilterCard'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import Image from 'next/image'
 import api from "@/lib/axios"
-import MyComponent from '@/utils/fetchDataInterval'
+// import MyComponent from '@/utils/fetchDataInterval'
 import Link from 'next/link'
 
 export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) => {
@@ -186,20 +187,16 @@ export const StatsTable: React.FC<MachineTableProps> = ({ data: initialData }) =
   };
 
   return (
-    <div className='flex h-full gap-2'>
-      <div>
-        <div className='flex flex-col space-y-4 mb-4'>
-          <button 
-            className='text-white bg-purple_button py-2 px-6 rounded-lg shadow-lg'
-            onClick= {() => {handleAdd()}}
-          >
-            Add Machine
-          </button>        
-        </div>
+    // <div className='flex h-full gap-2'>
+    <div className="flex flex-col md:flex-row p-4 gap-4">
+
+      {/* <div> */}
+      <div className="md:w-1/3 xl:w-1/4 w-full flex flex-col gap-4">
         <FilterCard onFilterChange={handleFilterChange} />
       </div>
      
       <div className="flex-grow overflow-auto custom-scrollbar">
+        
         <table className="w-full bg-white rounded-lg overflow-hidden">
           <thead className="bg-gray-50">
             <tr>
