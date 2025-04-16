@@ -2,6 +2,10 @@
 
 > This project is a smart analytics platform designed for car manufacturing operations. It provides real-time tracking of machine performance, production
 
+## Server Repository
+The backend server for this application can be found here:  
+[dev-fest-2024-api](https://github.com/bens1001/dev-fest-2024-api)
+
 ## Getting Started
 
 ### Prerequisites
@@ -32,6 +36,7 @@ Install the required dependencies:
 ```sh
 npm install
 ```
+
 To run the development server, use the following command:
 
 ```sh
